@@ -238,14 +238,9 @@ La création d'un nouveau `Controlleur` ainsi que la définition d'une nouvelle 
 Mettre en place une gestion des routes plus avancée permettrait de mieux gérer les parametres optionnels.
 La gestion par `Interface` permet un code homogene et facilement maintenable.
 
-## Conclusion
-
-Je vous remercie pour cette opportunité et reste à votre disposition pour toute question.
-
 Les Services permettent de centraliser la logique métier et de la rendre plus facilement maintenable.
 Ils sont instanciés dans les controlleurs necessitant une modification et sont statiques pour les autres.
 L'objectif est d'eviter d'instancier x fois les managers.
-
 
 ## Dev
 
