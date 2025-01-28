@@ -62,10 +62,7 @@ class FileController
 
             $fileManager = new FileManager();
 
-            $file = $fileManager->insertOne($prepared);
-
-            var_dump($file);
-            if (!$file instanceof File) {
+            if (!$fileManager->insertOne($prepared)) {
                 return $response->sendJson(
                     ['error' => 'Failed to save file'],
                     Response::HTTP_INTERNAL_SERVER_ERROR
