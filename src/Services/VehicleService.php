@@ -57,7 +57,7 @@ class VehicleService
     /**
      * Prepare a vehicle object with the provided data.
      *
-     * @param array  $data    The data to prepare the vehicle with.
+     * @param array   $data    The data to prepare the vehicle with.
      * @param Vehicle $vehicle The vehicle object to prepare.
      *
      * @return Vehicle The prepared vehicle object.

@@ -63,7 +63,7 @@ Bonne lecture !
 - [x] Documentation
   - [x] Wiki sur github
   - [x] Doc Endpoint API via aglio (API Blueprint)
-  - [x] Doc exporté via phpdoc
+  - [x] Doc exporté via phpdoc -> `php -S localhost:8080 -t /var/www/jra/docs`
 
 
 ## Qualité

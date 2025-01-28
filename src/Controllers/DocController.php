@@ -45,6 +45,6 @@ class DocController
     #[Route(path: '/api/doc', method: 'GET', secure: false)]
     public function get(Request $request, Response $response): Response
     {
-        return $response->send(View::render('doc'), Response::HTTP_OK);
+        return $response->send(View::render('../../docs/index'), Response::HTTP_OK);
     }
 }

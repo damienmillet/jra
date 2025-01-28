@@ -58,7 +58,7 @@ class FileService
      * Prepare a file object with the provided data.
      *
      * @param array $data The data to prepare the file with.
-     * @param File   $file The file object to prepare.
+     * @param File  $file The file object to prepare.
      *
      * @return File The prepared file object.
      */
@@ -66,10 +66,6 @@ class FileService
         array $data,
         File $file = new File()
     ) {
-
-        // todo check if toArray is needed
-        // $data = $data->toArray()
-
-        return $file;
+        return $file->hydrate($data);
     }
 }
