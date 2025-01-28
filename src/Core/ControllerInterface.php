@@ -27,8 +27,8 @@ interface ControllerInterface
     /**
      * Retrieve an item.
      *
-     * @param Request  $request
-     * @param Response $response
+     * @param Request  $request 
+     * @param Response $response 
      *
      * @return Response
      */
@@ -38,8 +38,8 @@ interface ControllerInterface
     /**
      * Create an item.
      *
-     * @param Request  $request
-     * @param Response $response
+     * @param Request  $request 
+     * @param Response $response 
      *
      * @return Response
      */
@@ -49,8 +49,8 @@ interface ControllerInterface
     /**
      * Replace an item.
      *
-     * @param Request  $request
-     * @param Response $response
+     * @param Request  $request 
+     * @param Response $response 
      *
      * @return Response
      */
@@ -60,8 +60,8 @@ interface ControllerInterface
     /**
      * Update an item.
      *
-     * @param Request  $request
-     * @param Response $response
+     * @param Request  $request 
+     * @param Response $response 
      *
      * @return Response
      */
@@ -71,8 +71,8 @@ interface ControllerInterface
     /**
      * Delete an item.
      *
-     * @param Request  $request
-     * @param Response $response
+     * @param Request  $request 
+     * @param Response $response 
      *
      * @return Response
      */

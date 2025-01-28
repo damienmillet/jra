@@ -79,7 +79,7 @@ class Route
     /**
      * Set the path of the route.
      *
-     * @param string $path
+     * @param string $path 
      *
      * @return Route
      */
@@ -104,7 +104,7 @@ class Route
     /**
      * Set the HTTP method of the route.
      *
-     * @param string $method
+     * @param string $method 
      *
      * @return Route
      */
@@ -129,7 +129,7 @@ class Route
     /**
      * Set the action of the route.
      *
-     * @param string $method
+     * @param string $method 
      *
      * @return Route
      */
@@ -179,7 +179,7 @@ class Route
     /**
      * Set the security level of the route.
      *
-     * @param boolean|Role $secure
+     * @param boolean|Role $secure 
      *
      * @return Route
      */
@@ -204,7 +204,7 @@ class Route
     /**
      * Set the parameters of the route.
      *
-     * @param array $params
+     * @param array $params 
      *
      * @return Route
      */
@@ -229,10 +229,9 @@ class Route
         $this->_pattern = preg_replace_callback(
             '/\{(:?)([a-zA-Z0-9_]+)\}/',
             function ($matches) {
-                return str_contains($matches[1], ':') ? '(?:(?P<' . $matches[2] . '>[^/]*))?'
-                // Paramètre optionnel
-                    : '(?P<' . $matches[2] . '>[^/]+)';
-                // Paramètre obligatoire
+                return str_contains($matches[1], ':') 
+                    ? '(?:(?P<' . $matches[2] . '>[^/]*))?' // Paramètre optionnel
+                    : '(?P<' . $matches[2] . '>[^/]+)'; // Paramètre obligatoire
             },
             $path
         );

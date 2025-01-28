@@ -62,7 +62,7 @@ class Model extends EntityManager
     /**
      * Set the value of _id
      *
-     * @param integer $id
+     * @param integer $id 
      *
      * @return self
      */
@@ -88,7 +88,7 @@ class Model extends EntityManager
     /**
      * Set the value of _brand
      *
-     * @param string $brand
+     * @param string $brand 
      *
      * @return self
      */
@@ -114,7 +114,7 @@ class Model extends EntityManager
     /**
      * Set the value of _name
      *
-     * @param string $name
+     * @param string $name 
      *
      * @return self
      */
@@ -140,7 +140,7 @@ class Model extends EntityManager
     /**
      * Set the value of _model
      *
-     * @param string $model
+     * @param string $model 
      *
      * @return self
      */
@@ -166,7 +166,7 @@ class Model extends EntityManager
     /**
      * Set the value of _version
      *
-     * @param string $version
+     * @param string $version 
      *
      * @return self
      */
@@ -192,7 +192,7 @@ class Model extends EntityManager
     /**
      * Set the value of _year
      *
-     * @param string $year
+     * @param string $year 
      *
      * @return self
      */
@@ -218,7 +218,7 @@ class Model extends EntityManager
     /**
      * Set the value of _price
      *
-     * @param string $price
+     * @param string $price 
      *
      * @return self
      */
@@ -244,7 +244,7 @@ class Model extends EntityManager
     /**
      * Set the value of _category
      *
-     * @param string $category
+     * @param string $category 
      *
      * @return self
      */
@@ -269,8 +269,8 @@ class Model extends EntityManager
 
     /**
      * Set the value of _createdAt
-     *
-     * @param string $createdAt
+     * 
+     * @param string $createdAt 
      *
      * @return self
      */
@@ -296,7 +296,7 @@ class Model extends EntityManager
     /**
      * Set the value of _modifiedAt
      *
-     * @param string $modifiedAt
+     * @param string $modifiedAt 
      *
      * @return self
      */

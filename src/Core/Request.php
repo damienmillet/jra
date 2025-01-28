@@ -149,8 +149,6 @@ class Request
             $data  = json_decode($input, $assoc);
         }
 
-        // todo : Vérifier si le contenu est bien du JSON
-
         // Vérification des erreurs JSON
         if (!$input && !$data && json_last_error() !== JSON_ERROR_NONE) {
             throw new \RuntimeException('Invalid JSON: ' . json_last_error_msg());

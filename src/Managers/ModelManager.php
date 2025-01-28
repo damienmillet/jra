@@ -40,16 +40,20 @@ class ModelManager extends BddManager
         $pdo  = $this->getPdo();
         $stmt = $pdo->prepare(
             'UPDATE models 
-            SET name = :name, hash = :hash, roles = :roles
-            WHERE id = :id'
+        SET brand = :brand, name = :name, model = :model, version = :version, year = :year, price = :price, category = :category
+        WHERE id = :id'
         );
 
         $isUpdated = $stmt->execute(
             [
-                ':name'  => $model->getName(),
-                ':hash'  => $model->getHash(),
-                ':roles' => ConvertService::arrayToJson($model->getRoles()),
-                ':id'    => $model->getId(),
+                ':brand'    => $model->getBrand(),
+                ':name'     => $model->getName(),
+                ':model'    => $model->getModel(),
+                ':version'  => $model->getVersion(),
+                ':year'     => $model->getYear(),
+                ':price'    => $model->getPrice(),
+                ':category' => $model->getCategory(),
+                ':id'       => $model->getId(),
             ]
         );
 
@@ -79,18 +83,22 @@ class ModelManager extends BddManager
             $exist = $this->exist('name', $model->getName());
 
             if ($exist) {
-                return 'model name already exist';
+                return 'model name already exists';
             }
 
             $stmt = $pdo->prepare(
-                'INSERT INTO models (name, hash, roles) 
-                VALUES (:name, :hash, :roles)'
+                'INSERT INTO models (brand, name, model, version, year, price, category) 
+            VALUES (:brand, :name, :model, :version, :year, :price, :category)'
             );
             $stmt->execute(
                 [
-                    ':name'  => $model->getName(),
-                    ':hash'  => $model->getHash(),
-                    ':roles' => ConvertService::arrayToJson($model->getRoles()),
+                    ':brand'    => $model->getBrand(),
+                    ':name'     => $model->getName(),
+                    ':model'    => $model->getModel(),
+                    ':version'  => $model->getVersion(),
+                    ':year'     => $model->getYear(),
+                    ':price'    => $model->getPrice(),
+                    ':category' => $model->getCategory(),
                 ]
             );
 
@@ -98,7 +106,7 @@ class ModelManager extends BddManager
             return $this->findOneById($insertedId);
         } catch (\PDOException $e) {
             if ($e->getCode() === '23000') {
-                return 'model name already exist';
+                return 'model name already exists';
             }
 
             return $e->getMessage();

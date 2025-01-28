@@ -41,10 +41,10 @@ class HistoricController
      *
      * @return Response
      */
-    #[Route(path: '/api/historics/{:id}', method: 'GET', secure: Role::ADMIN)]
+    #[Route(path: '/api/historics', method: 'GET', secure: Role::ADMIN)]
     public function get(Request $request, Response $response): Response
     {
-        $id = $request->getParam('id');
+        $id = $request->get('id');
 
         try {
             if (!$id) {
@@ -69,6 +69,3 @@ class HistoricController
         }
     }
 }
-
-
-// todo modifier pour rendre optionnel et attendre user_id ou contact_id
