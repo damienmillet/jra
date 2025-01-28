@@ -72,7 +72,7 @@ Bonne lecture !
 - [x] PSR-3 [Logger Interface](https://www.php-fig.org/psr/psr-3)
 - [x] PSR-4 [Autoloading Standard ](https://www.php-fig.org/psr/psr-4) ⚠️ l'autoloading via composer est fortement recommandée.
 - [ ] PSR-6 [Caching Interface](https://www.php-fig.org/psr/psr-6) -> Remplacé par la PSR-16.
-- [] PSR-7 [HTTP Message Interface](https://www.php-fig.org/psr/psr-7/) -> en cours...
+- [ ] PSR-7 [HTTP Message Interface](https://www.php-fig.org/psr/psr-7/) -> en cours...
 - [ ] PSR-11 [Container Interface](https://www.php-fig.org/psr/psr-11/) -> non mis en place, permettrait l'injection de dépendances.
 - [x] PSR-12 [Extended Coding Style Guide](https://www.php-fig.org/psr/psr-12)
 - [ ] PSR-13 [Hypermedia Links](https://www.php-fig.org/psr/psr-13) -> non necessaire
