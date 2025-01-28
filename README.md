@@ -36,7 +36,7 @@ Bonne lecture !
   - [x] Gestion des Vehicules
       - [x] Associer des véhicules aux contacts. ADMIN
       - [x] CRUD pour les ADMIN
-  - [ ] Gestion des fichiers
+  - [x] Gestion des fichiers
       - [x] Permettre l'upload et le téléchargement de fichiers associés à un contact (pdf, png, jpeg, jpg).
   - [x] Lire les stats (nb de contacts, nb de véhicules). USER et ADMIN
   - [x] Ajout quotidien des contacts
