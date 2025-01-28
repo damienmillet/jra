@@ -181,19 +181,6 @@ sudo ln -s /etc/nginx/sites-available/jra.conf /etc/nginx/sites-enabled/jra.conf
 sudo systemctl reload nginx
 ```
 
-### Avec Install
-
-Il s'agit d'une installation automatisée qui permet de mettre en place l'application en quelques commandes.
-Pour plus d'info : `jra-install --help`
-
-```bash
-sudo apt install php php-mysql mariadb-server nginx -y
-git clone https://github.com/damienmillet/jra -C /var/www
-chmod +x /var/www/jra/install
-sudo mv /var/www/jra/install /usr/local/bin/jra-install
-jra-install # laissez vous guider :)
-```
-
 ### HTTPS (auto-signé) :
 
 ```bash
