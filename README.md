@@ -47,8 +47,8 @@ Bonne lecture !
       - [x] Contacts ayant un véhicule de +3 ans
       - [x] Contacts n’ayant pas de véhicule
 - [x] Gestion des logs
-- [x] Gestion des erreurs
-- [x] Gestion des exceptions
+- [x] Gestion des erreurs (natif -> prévoir PSR)
+- [x] Gestion des exceptions (natif -> prévoir PSR)
 - [x] Gestion des middlewares
 - [x] Gestion des services
 - [x] Gestion des controlleurs
@@ -56,8 +56,8 @@ Bonne lecture !
 - [x] Gestion des managers
 - [x] Gestion des entités
 - [ ] Gestion des caches
-- [x] Gestion des requetes
-- [x] Gestion des reponses
+- [x] Gestion des requetes (natif -> prévoir PSR)
+- [x] Gestion des reponses (natif -> prévoir PSR)
 - [x] Gestion des headers
 - [x] Gestion des routes par attributs
 - [x] Documentation
