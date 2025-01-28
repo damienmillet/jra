@@ -1,0 +1,314 @@
+FORMAT: 1A
+HOST: http://localhost:8000
+
+# Documentation de l'API
+
+## Authentification
+
+### Obtenir un token CSRF [GET /api/auth/csrf]
++ Response 200 (application/json)
+    + Body
+            {
+                "csrf_token": "string"
+            }
+
+### Authentification [POST /api/auth]
++ Request (application/json)
+    + Body
+            {
+                "username": "string",
+                "password": "string"
+            }
++ Response 200 (application/json)
+    + Body
+            {
+                "token": "string"
+            }
+
+### Rafraîchir le token [GET /api/auth/refresh]
++ Response 200 (application/json)
+    + Body
+            {
+                "token": "string"
+            }
+
+## Contacts
+
+### Liste des contacts [GET /api/contacts]
++ Parameters
+    + page: (optional, number) - Page number (required if limit is provided)
+    + limit: (optional, number) - Number of items per page (required if page is provided)
++ Response 200 (application/json)
+    + Body
+            [
+                {
+                    "id": 1,
+                    "name": "John Doe",
+                    "email": "john.doe@example.com",
+                    "roles": ["USER"]
+                }
+            ]
+
+### Obtenir un contact [GET /api/contacts/{contact_id}]
++ Parameters
+    + contact_id: (required, number) - ID du contact
++ Response 200 (application/json)
+    + Body
+            {
+                "id": 1,
+                "name": "John Doe",
+                "email": "john.doe@example.com",
+                "roles": ["USER"]
+            }
+
+### Créer un contact [POST /api/contacts]
++ Request (application/json)
+    + Body
+            {
+                "name": "string",
+                "email": "string",
+                "roles": ["USER"|"ADMIN"]
+            }
++ Response 200 (application/json)
+    + Body
+            {
+                "id": 1,
+                "name": "John Doe",
+                "email": "john.doe@example.com",
+                "roles": ["USER"]
+            }
+
+### Mettre à jour un contact [PUT /api/contacts/{contact_id}]
++ Parameters
+    + contact_id: (required, number) - ID du contact
++ Request (application/json)
+    + Body
+            {
+                "name": "string",
+                "email": "string",
+                "roles": ["USER"|"ADMIN"]
+            }
++ Response 200 (application/json)
+    + Body
+            {
+                "id": 1,
+                "name": "John Doe",
+                "email": "john.doe@example.com",
+                "roles": ["USER"]
+            }
+
+### Modifier un contact [PATCH /api/contacts/{contact_id}]
++ Parameters
+    + contact_id: (required, number) - ID du contact
++ Request (application/json)
+    + Body
+            {
+                "name": "string",
+                "email": "string",
+                "roles": ["USER"|"ADMIN"]
+            }
++ Response 200 (application/json)
+    + Body
+            {
+                "id": 1,
+                "name": "John Doe",
+                "email": "john.doe@example.com",
+                "roles": ["USER"]
+            }
+
+### Supprimer un contact [DELETE /api/contacts/{contact_id}]
++ Parameters
+    + contact_id: (required, number) - ID du contact
++ Response 201
+
+## Fichiers
+
+### Ajouter un fichier [POST /api/files/{contact_id}]
++ Parameters
+    + contact_id: (required, number) - ID du contact
++ Request (multipart/form-data)
+    + Body
+            (binary file)
++ Response 201
+
+### Obtenir les fichiers d'un contact [GET /api/files/{contact_id}]
++ Parameters
+    + contact_id: (required, number) - ID du contact
++ Response 200 (application/json)
+    + Body
+            [
+                {
+                    "id": 1,
+                    "name": "contrat-john.pdf",
+                    "type": "pdf",
+                    "path": "/files/contrats/contrat-john.pdf"
+                }
+            ]
+
+### Supprimer un fichier [DELETE /api/files/{file_id}]
++ Parameters
+    + file_id: (required, number) - ID du fichier
++ Response 201
+
+## Historique
+
+### Obtenir l'historique [GET /api/historics]
++ Parameters
+    + contact_id: (optional, number) - ID du contact
+    + user_id: (optional, number) - ID de l'utilisateur
++ Response 200 (application/json)
+    + Body
+            [
+                {
+                    "id": 1,
+                    "contact_id": 1,
+                    "column_name": "name",
+                    "old_value": "John",
+                    "new_value": "John Doe",
+                    "modified_at": "2023-01-01T00:00:00Z",
+                    "modified_by": 1
+                }
+            ]
+
+## Modèles
+
+### Obtenir un modèle [GET /api/models/{model_id}]
++ Parameters
+    + model_id: (required, number) - ID du modèle
++ Response 200 (application/json)
+    + Body
+            {
+                "id": 1,
+                "name": "Audi A3",
+                "brand": "Audi",
+                "model": "A3",
+                "version": 1,
+                "year": 2020,
+                "price": 35000.00,
+                "category": "car"
+            }
+
+### Créer un modèle [POST /api/models]
++ Request (application/json)
+    + Body
+            {
+                "name": "string",
+                "brand": "string",
+                "model": "string",
+                "version": "int",
+                "year": "int",
+                "price": "float",
+                "category": ["car", "suv", "other"]
+            }
++ Response 200 (application/json)
+    + Body
+            {
+                "id": 1,
+                "name": "Audi A3",
+                "brand": "Audi",
+                "model": "A3",
+                "version": 1,
+                "year": 2020,
+                "price": 35000.00,
+                "category": "car"
+            }
+
+## Statistiques
+
+### Obtenir les statistiques [GET /api/stats]
++ Response 200 (application/json)
+    + Body
+            {
+                "total_contacts": 100,
+                "total_vehicles": 50
+            }
+
+## Utilisateurs
+
+### Obtenir un utilisateur [GET /api/users/{user_id}]
++ Parameters
+    + user_id: (required, number) - ID de l'utilisateur
++ Response 200 (application/json)
+    + Body
+            {
+                "id": 1,
+                "name": "admin",
+                "roles": ["ADMIN", "USER"]
+            }
+
+### Créer un utilisateur [POST /api/users]
++ Request (application/json)
+    + Body
+            {
+                "name": "string",
+                "email": "string",
+                "roles": ["USER"|"ADMIN"]
+            }
++ Response 200 (application/json)
+    + Body
+            {
+                "id": 1,
+                "name": "admin",
+                "roles": ["ADMIN", "USER"]
+            }
+
+## Véhicules
+
+### Obtenir un véhicule [GET /api/vehicles/{vehicle_id}]
++ Parameters
+    + vehicle_id: (required, number) - ID du véhicule
++ Response 200 (application/json)
+    + Body
+            {
+                "id": 1,
+                "name": "Audi A3",
+                "model_id": 1,
+                "buy_price": 35000.00,
+                "buy_date": "2020-01-01",
+                "type": "new",
+                "release_date": "2020-01-15",
+                "fuel": "essence",
+                "km": 0,
+                "cv": 5,
+                "color": "black",
+                "transmission": "manual",
+                "doors": 5,
+                "seats": 5
+            }
+
+### Créer un véhicule [POST /api/vehicles]
++ Request (application/json)
+    + Body
+            {
+                "name": "string",
+                "model_id": "int",
+                "buy_price": "float",
+                "buy_date": "date",
+                "type": ["new", "used"],
+                "release_date": "date",
+                "fuel": ["diesel", "essence", "electric", "hybrid"],
+                "km": "int",
+                "cv": "int",
+                "color": "string",
+                "transmission": ["manual", "automatic"],
+                "doors": "int",
+                "seats": "int"
+            }
++ Response 200 (application/json)
+    + Body
+            {
+                "id": 1,
+                "name": "Audi A3",
+                "model_id": 1,
+                "buy_price": 35000.00,
+                "buy_date": "2020-01-01",
+                "type": "new",
+                "release_date": "2020-01-15",
+                "fuel": "essence",
+                "km": 0,
+                "cv": 5,
+                "color": "black",
+                "transmission": "manual",
+                "doors": 5,
+                "seats": 5
+            }
