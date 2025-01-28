@@ -40,16 +40,25 @@ class VehicleManager extends BddManager
         $pdo  = $this->getPdo();
         $stmt = $pdo->prepare(
             'UPDATE vehicles 
-            SET name = :name, hash = :hash, roles = :roles
-            WHERE id = :id'
+        SET name = :name, model_id = :model_id, buy_price = :buy_price, buy_date = :buy_date, type = :type, fuel = :fuel, km = :km, cv = :cv, color = :color, transmission = :transmission, doors = :doors, seats = :seats
+        WHERE id = :id'
         );
 
         $isUpdated = $stmt->execute(
             [
-                ':name'  => $vehicle->getName(),
-                ':hash'  => $vehicle->getHash(),
-                ':roles' => ConvertService::arrayToJson($vehicle->getRoles()),
-                ':id'    => $vehicle->getId(),
+                ':name'         => $vehicle->getName(),
+                ':model_id'     => $vehicle->getModelId(),
+                ':buy_price'    => $vehicle->getBuyPrice(),
+                ':buy_date'     => $vehicle->getBuyDate(),
+                ':type'         => $vehicle->getType(),
+                ':fuel'         => $vehicle->getFuel(),
+                ':km'           => $vehicle->getKm(),
+                ':cv'           => $vehicle->getCv(),
+                ':color'        => $vehicle->getColor(),
+                ':transmission' => $vehicle->getTransmission(),
+                ':doors'        => $vehicle->getDoors(),
+                ':seats'        => $vehicle->getSeats(),
+                ':id'           => $vehicle->getId(),
             ]
         );
 
@@ -76,21 +85,24 @@ class VehicleManager extends BddManager
     {
         $pdo = $this->getPdo();
         try {
-            $exist = $this->exist('name', $vehicle->getName());
-
-            if ($exist) {
-                return 'vehicle name already exist';
-            }
-
             $stmt = $pdo->prepare(
-                'INSERT INTO vehicles (name, hash, roles) 
-                VALUES (:name, :hash, :roles)'
+                'INSERT INTO vehicles (name, model_id, buy_price, buy_date, type, fuel, km, cv, color, transmission, doors, seats) 
+            VALUES (:name, :model_id, :buy_price, :buy_date, :type, :fuel, :km, :cv, :color, :transmission, :doors, :seats)'
             );
             $stmt->execute(
                 [
-                    ':name'  => $vehicle->getName(),
-                    ':hash'  => $vehicle->getHash(),
-                    ':roles' => ConvertService::arrayToJson($vehicle->getRoles()),
+                    ':name'         => $vehicle->getName(),
+                    ':model_id'     => $vehicle->getModelId(),
+                    ':buy_price'    => $vehicle->getBuyPrice(),
+                    ':buy_date'     => $vehicle->getBuyDate(),
+                    ':type'         => $vehicle->getType(),
+                    ':fuel'         => $vehicle->getFuel(),
+                    ':km'           => $vehicle->getKm(),
+                    ':cv'           => $vehicle->getCv(),
+                    ':color'        => $vehicle->getColor(),
+                    ':transmission' => $vehicle->getTransmission(),
+                    ':doors'        => $vehicle->getDoors(),
+                    ':seats'        => $vehicle->getSeats(),
                 ]
             );
 
@@ -98,7 +110,7 @@ class VehicleManager extends BddManager
             return $this->findOneById($insertedId);
         } catch (\PDOException $e) {
             if ($e->getCode() === '23000') {
-                return 'vehicle name already exist';
+                return 'vehicle already exists';
             }
 
             return $e->getMessage();
