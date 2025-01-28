@@ -25,7 +25,7 @@ Bonne lecture !
     - [x] CRUD pour les ADMIN
     - [x] Historique des modifications
       - [x] Conserver un historique des modifications effectuées sur les contacts.
-    - [ ] Permettre la recherche et le filtrage des contacts. USER et ADMIN
+    - [ ] Permettre la recherche et le filtrage des contacts. USER et ADMIN `incomplet`
     - [x] Recherche et filtres sur les contacts
       - [x] Contacts ayant un véhicule de +30000km
       - [x] Contacts ayant un véhicule de +3 ans
@@ -36,8 +36,8 @@ Bonne lecture !
   - [x] Gestion des Vehicules
       - [x] Associer des véhicules aux contacts. ADMIN
       - [x] CRUD pour les ADMIN
-  - [x] Gestion des fichiers
-      - [x] Permettre l'upload et le téléchargement de fichiers associés à un contact (pdf, png, jpeg, jpg).
+  - [ ] Gestion des fichiers `incomplet`
+      - [ ] Permettre l'upload et le téléchargement de fichiers associés à un contact (pdf, png, jpeg, jpg).
   - [x] Lire les stats (nb de contacts, nb de véhicules). USER et ADMIN
   - [x] Ajout quotidien des contacts
     - [x]  Mettre en place une tâche récurrente quotidienne qui alimente la BDD avec plusieurs contacts depuis un fichier excel déposé sur un ftp.
