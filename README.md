@@ -229,7 +229,7 @@ Dans le doute j'ai egalement fais un script qui permet l'extraction des contacts
 ### PHP Version
 
 J'ai décidé de rester sur la version PHP 8.2 puisqu'il semble que ce soit la version vers laquelle vous semblez vous diriger.
-La version 8.4 aurait cependant eu un impact positif sur la qualité du code. Notamment concernant les annotations.
+La version 8.4 aurait cependant eu un impact positif sur la qualité du code. Notamment concernant les attribues de methodes.
 
 ## Evolution
 
