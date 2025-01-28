@@ -76,7 +76,7 @@ DROP TABLE IF EXISTS `files`;
 CREATE TABLE IF NOT EXISTS `files` (
     `id` INT(11) AUTO_INCREMENT PRIMARY KEY,
     `name` VARCHAR(255) NOT NULL,
-    `type` ENUM('pdf', 'png', 'jpeg', 'jpg') NOT NULL,
+    `type` ENUM('image/jpeg', 'image/pdf', 'image/png', 'image/jpg') NOT NULL,
     `path` VARCHAR(512) DEFAULT NULL, -- Chemin menant au fichier sur le disque
     `blob` LONGBLOB DEFAULT NULL,     -- Contenu binaire du fichier
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -137,9 +137,9 @@ INSERT INTO `vehicles` (`name`, `model_id`, `buy_price`, `buy_date`, `type`, `re
 
 -- **Insertion de données de test dans files**
 INSERT INTO `files` (`name`, `type`, `path`) VALUES 
-    ('contrat-john.pdf', 'pdf', '/files/contrats/contrat-john.pdf'),
-    ('photo-john.png', 'png', '/files/photos/photo-john.png'),
-    ('photo-jane.jpg', 'jpg', '/files/photos/photo-jane.jpg');
+    ('contrat-john.pdf', 'image/pdf', '/files/contrats/contrat-john.pdf'),
+    ('photo-john.png', 'image/png', '/files/photos/photo-john.png'),
+    ('photo-jane.jpg', 'image/jpg', '/files/photos/photo-jane.jpg');
 
 -- **Association entre contacts et fichiers dans contact_files**
 INSERT INTO `contact_files` (`contact_id`, `file_id`) VALUES 
@@ -158,7 +158,6 @@ CREATE INDEX idx_historic_contact_id ON `historics` (`contact_id`);
 CREATE INDEX idx_historic_modified_at ON `historics` (`modified_at`);
 CREATE INDEX idx_file_type ON `files` (`type`);
 CREATE INDEX idx_file_path ON `files` (`path`);
-CREATE INDEX idx_contact_files ON `contact_files` (`contact_id`, `file_id`);
 
 DROP TRIGGER IF EXISTS `before_contacts_update`;
 

@@ -66,6 +66,13 @@ class FileService
         array $data,
         File $file = new File()
     ) {
-        return $file->hydrate($data);
+
+        $data['path'] = $data['full_path'];
+        $file = $file->hydrate($data);
+        $content = file_get_contents($data['tmp_name']);
+        $blob = base64_decode($content);
+        $file->setBlob($blob);
+
+        return $file;
     }
 }

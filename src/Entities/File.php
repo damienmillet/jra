@@ -34,7 +34,30 @@ class File extends EntityManager
     private string $_mimeType;
     private string $_type;
     private mixed $_blob;
+    private string $_tmpName;
 
+    /**
+     * Get the temporary name of the file.
+     *
+     * @return string The temporary name of the file.
+     */
+    public function getTmpName(): string
+    {
+        return $this->_tmpName;
+    }
+
+    /**
+     * Set the temporary name of the file.
+     *
+     * @param string $tmpName The temporary name of the file.
+     *
+     * @return self
+     */
+    public function setTmpName(string $tmpName): self
+    {
+        $this->_tmpName = $tmpName;
+        return $this;
+    }
     /**
      * Get the type of the file.
      *

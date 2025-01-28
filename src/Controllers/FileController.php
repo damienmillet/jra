@@ -17,6 +17,10 @@ use Core\Request;
 use Core\Response;
 use Core\Auth\Role;
 use Core\Route;
+use Entities\File;
+use Core\Validator\Validator;
+use Managers\FileManager;
+use Services\FileService;
 
 /**
  * Class FileController
@@ -41,11 +45,39 @@ class FileController
     #[Route('/api/files/{id}', method: 'POST', secure: Role::ADMIN)]
     public function post(Request $request, Response $response): Response
     {
-        // si la ressource est deja liée à un utilisateur on la lie sans la dupliquer
-        // si la ressource n'existe pas on la crée et on la lie à l'utilisateur
-        $response->setStatusCode(200);
-        // $response->setContent('ExportController');
-        return $response;
+        $id = $request->getParam('id');
+
+        if (!Validator::isId($id)) {
+            return $response->sendJson(
+                ['error' => 'Invalid id'],
+                Response::HTTP_BAD_REQUEST
+            );
+        }
+
+        $files = $request->getFiles();
+
+        foreach ($files as $file) {
+
+            $prepared = FileService::prepare($file);
+
+            $fileManager = new FileManager();
+
+            $file = $fileManager->insertOne($prepared);
+
+            var_dump($file);
+            if (!$file instanceof File) {
+                return $response->sendJson(
+                    ['error' => 'Failed to save file'],
+                    Response::HTTP_INTERNAL_SERVER_ERROR
+                );
+            }
+        }
+
+        return $response->sendJson(
+            ['success' => 'Files uploaded successfully'],
+            Response::HTTP_OK
+        );
+
     }
 
 

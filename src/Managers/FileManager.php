@@ -95,8 +95,7 @@ class FileManager extends BddManager
                 ]
             );
 
-            $insertedId = $pdo->lastInsertId();
-            return $this->findOneById($insertedId);
+            return $pdo->lastInsertId();
         } catch (\PDOException $e) {
             if ($e->getCode() === '23000') {
                 return 'file name already exist';
