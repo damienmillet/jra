@@ -151,9 +151,9 @@ header("X-Frame-Options: DENY"); \
 header("X-XSS-Protection: 1; mode=block"); \
 header("Strict-Transport-Security: max-age=31536000; includeSubDomains; preload"); \
 header("Referrer-Policy: no-referrer-when-downgrade"); \
-header("Content-Security-Policy: default-src '\''self'\''; script-src '\''self'\''; style-src '\''self'\''; img-src '\''self'\'' data:; font-src '\''self'\'';");' /var/www/jra4/public/index.php
+header("Content-Security-Policy: default-src '\''self'\''; script-src '\''self'\''; style-src '\''self'\''; img-src '\''self'\'' data:; font-src '\''self'\'';");' /var/www/jra/public/index.php
 # lancement du serveur built-in
-php -S localhost:8000 -t /var/www/jra4/public
+php -S localhost:8000 -t /var/www/jra/public
 ```
 
 ### Apache 
