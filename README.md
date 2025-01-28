@@ -55,7 +55,7 @@ Bonne lecture !
 - [x] Gestion des routes
 - [x] Gestion des managers
 - [x] Gestion des entités
-- [x] Gestion des caches
+- [ ] Gestion des caches
 - [x] Gestion des requetes
 - [x] Gestion des reponses
 - [x] Gestion des headers
