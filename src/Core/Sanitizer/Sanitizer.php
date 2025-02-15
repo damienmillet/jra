@@ -1,31 +1,12 @@
 <?php
 
-/**
- * Core file for defining the Sanitizer class.
- * php version 8.2
- *
- * @category Core
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     damien-millet.dev
- */
-
 namespace Core\Sanitizer;
 
 /**
  * Class Sanitizer
- *
- * @category Core
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     damien-millet.dev
  */
 class Sanitizer
 {
- 
-
     /**
      * Sanitize a string by converting special characters to HTML entities.
      *
@@ -49,7 +30,13 @@ class Sanitizer
      */
     public static function sanitizeEmail(string $email): string
     {
-        return filter_var($email, FILTER_SANITIZE_EMAIL);
+        $sanitized = filter_var($email, FILTER_SANITIZE_EMAIL);
+
+        if ($sanitized === false) {
+            throw new \InvalidArgumentException('Invalid email address');
+        }
+
+        return $sanitized;
     }
 
     /**
@@ -61,7 +48,13 @@ class Sanitizer
      */
     public static function sanitizeUrl(string $url): string
     {
-        return filter_var($url, FILTER_SANITIZE_URL);
+        $sanitized =  filter_var($url, FILTER_SANITIZE_URL);
+
+        if ($sanitized === false) {
+            throw new \InvalidArgumentException('Invalid URL');
+        }
+
+        return $sanitized;
     }
 
     /**
@@ -69,12 +62,17 @@ class Sanitizer
      *
      * @param mixed $value The value to sanitize.
      *
-     * @return int|null The sanitized integer or null if not valid.
+     * @return integer The sanitized integer or null if not valid.
      */
-    public static function sanitizeInteger($value): ?int
+    public static function sanitizeInteger(mixed $value): int
     {
         $sanitized = filter_var($value, FILTER_SANITIZE_NUMBER_INT);
-        return is_numeric($sanitized) ? (int) $sanitized : null;
+
+        if ($sanitized === false && !is_numeric($value)) {
+            throw new \InvalidArgumentException('Invalid integer');
+        }
+
+        return (int) $sanitized;
     }
 
     /**
@@ -82,16 +80,21 @@ class Sanitizer
      *
      * @param mixed $value The value to sanitize.
      *
-     * @return float|null The sanitized float or null if not valid.
+     * @return float The sanitized float or null if not valid.
      */
-    public static function sanitizeFloat($value): ?float
+    public static function sanitizeFloat(mixed $value): float
     {
         $sanitized = filter_var(
             $value,
             FILTER_SANITIZE_NUMBER_FLOAT,
             FILTER_FLAG_ALLOW_FRACTION
         );
-        return is_numeric($sanitized) ? (float) $sanitized : null;
+
+        if ($sanitized === false && !is_numeric($value)) {
+            throw new \InvalidArgumentException('Invalid integer');
+        }
+
+        return (float) $sanitized;
     }
 
     /**
@@ -99,18 +102,21 @@ class Sanitizer
      *
      * @param string $json The JSON string to sanitize.
      *
-     * @return array|null The sanitized array or null if the JSON is invalid.
+     * @return array<mixed> The sanitized array or null if the JSON is invalid.
      */
-    public static function sanitizeJson(string $json): ?array
+    public static function sanitizeJson(string $json): array
     {
         $decoded = json_decode($json, true);
-        return json_last_error() === JSON_ERROR_NONE 
-            ? $decoded 
-            : null;
+
+        if ($decoded === null) {
+            throw new \InvalidArgumentException('Invalid JSON');
+        }
+
+        return (array) $decoded;
     }
 
     /**
-     * Sanitize a file name by removing any path information and converting special 
+     * Sanitize a file name by removing any path information and converting special
      * characters to HTML entities.
      *
      * @param string $fileName The file name to sanitize.
