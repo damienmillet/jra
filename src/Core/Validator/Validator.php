@@ -1,38 +1,20 @@
 <?php
 
-/**
- * Core file for defining the Validator class.
- * php version 8.2
- *
- * @category Core
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     damien-millet.dev
- */
-
  namespace Core\Validator;
 
  /**
   * Class Validator
-  *
-  * @category Core
-  * @package  Jra
-  * @author   Damien Millet <contact@damien-millet.dev>
-  * @license  MIT License
-  * @link     damien-millet.dev
   */
 class Validator
 {
-
     /**
      * Check if the value is a string.
      *
      * @param mixed $value The value to check.
      *
-     * @return bool True if the value is a string, false otherwise.
+     * @return boolean True if the value is a string, false otherwise.
      */
-    public static function isString($value): bool
+    public static function isString(mixed $value): bool
     {
         return is_string($value);
     }
@@ -42,30 +24,35 @@ class Validator
      *
      * @param mixed $value The value to check.
      *
-     * @return bool True if the value is an integer, false otherwise.
+     * @return boolean True if the value is an integer, false otherwise.
      */
-    public static function isInteger($value): bool
+    public static function isInteger(mixed $value): bool
     {
-        return !!filter_var($value, FILTER_VALIDATE_INT);
+        return filter_var($value, FILTER_VALIDATE_INT) !== false;
     }
 
 
     /**
      * Check if the integer value is within a specified range.
      *
-     * @param mixed $value The value to check.
-     * @param int   $min   The minimum range value.
-     * @param int   $max   The maximum range value.
+     * @param mixed   $value The value to check.
+     * @param integer $min   The minimum range value.
+     * @param integer $max   The maximum range value.
      *
-     * @return bool True if the value is within the range, false otherwise.
+     * @return boolean True if the value is within the range, false otherwise.
      */
-    public static function isIntegerInRange($value, int $min, int $max): bool
+    public static function isIntegerInRange(mixed $value, int $min, int $max): bool
     {
-        return !!filter_var(
-            $value, FILTER_VALIDATE_INT, [
-            'options' => ['min_range' => $min, 'max_range' => $max],
+        return filter_var(
+            $value,
+            FILTER_VALIDATE_INT,
+            [
+             'options' => [
+                           'min_range' => $min,
+                           'max_range' => $max,
+                          ],
             ]
-        );
+        ) !== false;
     }
 
     /**
@@ -73,11 +60,11 @@ class Validator
      *
      * @param mixed $value The value to check.
      *
-     * @return bool True if the value is a valid ID, false otherwise.
+     * @return boolean True if the value is a valid ID, false otherwise.
      */
-    public static function isId($value): bool
+    public static function isId(mixed $value): bool
     {
-        return !!filter_var($value, FILTER_VALIDATE_INT) && $value > 0;
+        return filter_var($value, FILTER_VALIDATE_INT)  !== false && $value > 0;
     }
 
 
@@ -86,11 +73,11 @@ class Validator
      *
      * @param string $email The email address to check.
      *
-     * @return bool True if the value is a valid email address, false otherwise.
+     * @return boolean True if the value is a valid email address, false otherwise.
      */
     public static function isEmail(string $email): bool
     {
-        return !!filter_var($email, FILTER_VALIDATE_EMAIL);
+        return filter_var($email, FILTER_VALIDATE_EMAIL)  !== false;
     }
 
 
@@ -99,11 +86,11 @@ class Validator
      *
      * @param string $url The URL to check.
      *
-     * @return bool True if the value is a valid URL, false otherwise.
+     * @return boolean True if the value is a valid URL, false otherwise.
      */
     public static function isUrl(string $url): bool
     {
-        return !!filter_var($url, FILTER_VALIDATE_URL);
+        return filter_var($url, FILTER_VALIDATE_URL) !== false;
     }
 
     /**
@@ -112,11 +99,11 @@ class Validator
      * @param string $value   The value to check.
      * @param string $pattern The pattern to match against.
      *
-     * @return bool True if the value matches the pattern, false otherwise.
+     * @return boolean True if the value matches the pattern, false otherwise.
      */
     public static function matchesPattern(string $value, string $pattern): bool
     {
-        return !!preg_match($pattern, $value);
+        return preg_match($pattern, $value)  !== false;
     }
 
     /**
@@ -124,7 +111,7 @@ class Validator
      *
      * @param string $json The JSON string to check.
      *
-     * @return bool True if the value is a valid JSON string, false otherwise.
+     * @return boolean True if the value is a valid JSON string, false otherwise.
      */
     public static function isJson(string $json): bool
     {
@@ -137,30 +124,73 @@ class Validator
      *
      * @param mixed $value The value to check.
      *
-     * @return bool True if the value is a boolean, false otherwise.
+     * @return boolean True if the value is a boolean, false otherwise.
      */
-    public static function isBoolean($value): bool
+    public static function isBoolean(mixed $value): bool
     {
-        return !!filter_var($value, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
+        return filter_var($value, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE)  !== false;
+    }
+
+    /**
+     * Check if the value is null.
+     *
+     * @param mixed $value The value to check.
+     *
+     * @return boolean True if the value is null, false otherwise.
+     */
+    public static function isNull(mixed $value): bool
+    {
+        return is_null($value);
+    }
+
+    /**
+     * Checks if the given value is empty.
+     *
+     * @param string $value The value to check.
+     * @return boolean True if the value is empty, false otherwise.
+     */
+    public static function isEmptyString(string $value): bool
+    {
+        return $value === '';
+    }
+
+    /**
+     * Checks if the given array is not empty.
+     *
+     * @param array<mixed> $value The array to check.
+     * @return boolean Returns true if the array is not empty, false otherwise.
+     */
+    public static function isEmptyArray(array $value): bool
+    {
+        return $value === [];
+    }
+
+    /**
+     * Checks if the given value is an array.
+     *
+     * @param mixed $value The value to check.
+     * @return boolean True if the value is an array, false otherwise.
+     */
+    public static function isArray(mixed $value): bool
+    {
+        return is_array($value);
     }
 
     /**
      * Check if all keys exist in the given JSON array.
      *
-     * @param array $keys The keys to check.
-     * @param array $json The JSON array to check against.
+     * @param array<string> $keys The keys to check.
+     * @param array<mixed>  $json The JSON array to check against.
      *
      * @return boolean True if all keys exist, false otherwise.
      */
-    public static function hasKeys(array $keys, array  $json): bool
+    public static function hasKeys(array $keys, array $json): bool
     {
-        if (empty($json)) {
+        if (self::isEmptyArray($json)) {
             return false;
         }
 
-        if (is_array($json)) {
-            $json = (object) $json;
-        }
+        $json = (object) $json;
 
         foreach ($keys as $key) {
             if (!property_exists($json, $key)) {
