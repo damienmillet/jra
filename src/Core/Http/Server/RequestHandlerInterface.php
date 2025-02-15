@@ -9,8 +9,7 @@ use Core\Http\Message\ServerRequestInterface;
  * Handles a server request and produces a response.
  *
  * An HTTP request handler process an HTTP request in order to produce an
- * HTTP response.
- */
+ * HTTP response. */
 interface RequestHandlerInterface
 {
     /**

@@ -1,39 +1,21 @@
 <?php
 
-/**
- * Core file for defining the View class.
- * php version 8.2
- *
- * @category Core
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     damien-millet.dev
- */
-
 namespace Core;
 
 /**
  * Class View
- *
- * @category Core
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     damien-millet.dev
  */
 class View
 {
     /**
      * Render a view file
      *
-     * @param string $view The view file to render
-     * @param array  $data The data to pass to the view
+     * @param string       $view The view file to render.
+     * @param array<mixed> $data The data to pass to the view.
      *
-     * @return string The rendered view content
-     * @throws \Exception If the view file is not found
+     * @return string The rendered view content.
      */
-    public static function render($view, $data = [])
+    public static function render(string $view, array $data = [])
     {
         // Extraire les données pour qu'elles soient accessibles dans la vue
         extract($data);
@@ -50,6 +32,12 @@ class View
         include_once $viewFile;
 
         // Récupérer le contenu généré
-        return ob_get_clean();
+        $view = ob_get_clean();
+
+        if ($view === false) {
+            throw new \Exception("Error rendering view '{$view}'.");
+        }
+
+        return $view;
     }
 }

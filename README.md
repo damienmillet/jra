@@ -62,7 +62,7 @@ Bonne lecture !
 - [x] Gestion des routes par attributs
 - [x] Documentation
   - [x] Wiki sur github (en cours...)
-  - [x] Doc Endpoint API via aglio (API Blueprint)
+  - [x] Doc Endpoint API via aglio (API Blueprint) `/api`
   - [x] Doc exporté via phpdoc -> `php -S localhost:8080 -t /var/www/jra/docs`
 
 

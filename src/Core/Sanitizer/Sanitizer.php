@@ -3,8 +3,7 @@
 namespace Core\Sanitizer;
 
 /**
- * Class Sanitizer
- */
+ * Class Sanitizer */
 class Sanitizer
 {
     /**

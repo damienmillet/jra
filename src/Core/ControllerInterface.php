@@ -1,34 +1,17 @@
 <?php
 
-/**
- * Core file for defining the Controller Interface.
- * php version 8.2
- *
- * @category Controllers
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     https://damien-millet.dev
- */
-
 namespace Core;
 
 /**
  * Class ControllerInterface
- *
- * @category Entities
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     damien-millet.dev
  */
 interface ControllerInterface
 {
     /**
      * Retrieve an item.
      *
-     * @param Request  $request 
-     * @param Response $response 
+     * @param Request  $request
+     * @param Response $response
      *
      * @return Response
      */
@@ -38,8 +21,8 @@ interface ControllerInterface
     /**
      * Create an item.
      *
-     * @param Request  $request 
-     * @param Response $response 
+     * @param Request  $request
+     * @param Response $response
      *
      * @return Response
      */
@@ -49,8 +32,8 @@ interface ControllerInterface
     /**
      * Replace an item.
      *
-     * @param Request  $request 
-     * @param Response $response 
+     * @param Request  $request
+     * @param Response $response
      *
      * @return Response
      */
@@ -60,8 +43,8 @@ interface ControllerInterface
     /**
      * Update an item.
      *
-     * @param Request  $request 
-     * @param Response $response 
+     * @param Request  $request
+     * @param Response $response
      *
      * @return Response
      */
@@ -71,8 +54,8 @@ interface ControllerInterface
     /**
      * Delete an item.
      *
-     * @param Request  $request 
-     * @param Response $response 
+     * @param Request  $request
+     * @param Response $response
      *
      * @return Response
      */

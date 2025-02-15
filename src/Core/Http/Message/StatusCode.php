@@ -4,12 +4,6 @@ namespace Core\Http\Message;
 
 /**
  * Enum StatusCode
- *
- * @category Core
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     damien-millet.dev
  */
 enum StatusCode: int
 {
