@@ -1,16 +1,5 @@
 <?php
 
-/**
- * Entity file for defining the Model Entity class.
- * php version 8.2
- *
- * @category Entities
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     damien-millet.dev
- */
-
 namespace Entities;
 
 use Core\Auth\Role;
@@ -18,34 +7,28 @@ use Core\EntityManager;
 
 /**
  * Class ModelEntity
- *
- * @category Entities
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     damien-millet.dev
  */
 class Model extends EntityManager
 {
-    private int $_id = 0;
+    private int $id = 0;
 
-    private string $_brand;
+    private string $brand;
 
-    private string $_name;
+    private string $name;
 
-    private string $_model;
+    private string $model;
 
-    private string $_version;
+    private string $version;
 
-    private string $_year;
+    private string $year;
 
-    private string $_price;
+    private string $price;
 
-    private string $_category;
+    private string $category;
 
-    private string $_createdAt;
+    private string $createdAt;
 
-    private string $_modifiedAt;
+    private string $modifiedAt;
 
 
     /**
@@ -55,20 +38,20 @@ class Model extends EntityManager
      */
     public function getId(): int
     {
-        return $this->_id;
+        return $this->id;
     }
 
 
     /**
      * Set the value of _id
      *
-     * @param integer $id 
+     * @param integer $id
      *
      * @return self
      */
     public function setId(int $id): self
     {
-        $this->_id = $id;
+        $this->id = $id;
 
         return $this;
     }
@@ -81,20 +64,20 @@ class Model extends EntityManager
      */
     public function getBrand(): string
     {
-        return $this->_brand;
+        return $this->brand;
     }
 
 
     /**
      * Set the value of _brand
      *
-     * @param string $brand 
+     * @param string $brand
      *
      * @return self
      */
     public function setBrand(string $brand): self
     {
-        $this->_brand = $brand;
+        $this->brand = $brand;
 
         return $this;
     }
@@ -107,20 +90,20 @@ class Model extends EntityManager
      */
     public function getName(): string
     {
-        return $this->_name;
+        return $this->name;
     }
 
 
     /**
      * Set the value of _name
      *
-     * @param string $name 
+     * @param string $name
      *
      * @return self
      */
     public function setName(string $name): self
     {
-        $this->_name = $name;
+        $this->name = $name;
 
         return $this;
     }
@@ -133,20 +116,20 @@ class Model extends EntityManager
      */
     public function getModel(): string
     {
-        return $this->_model;
+        return $this->model;
     }
 
 
     /**
      * Set the value of _model
      *
-     * @param string $model 
+     * @param string $model
      *
      * @return self
      */
     public function setModel(string $model): self
     {
-        $this->_model = $model;
+        $this->model = $model;
 
         return $this;
     }
@@ -159,20 +142,20 @@ class Model extends EntityManager
      */
     public function getVersion(): string
     {
-        return $this->_version;
+        return $this->version;
     }
 
 
     /**
      * Set the value of _version
      *
-     * @param string $version 
+     * @param string $version
      *
      * @return self
      */
     public function setVersion(string $version): self
     {
-        $this->_version = $version;
+        $this->version = $version;
 
         return $this;
     }
@@ -185,20 +168,20 @@ class Model extends EntityManager
      */
     public function getYear(): string
     {
-        return $this->_year;
+        return $this->year;
     }
 
 
     /**
      * Set the value of _year
      *
-     * @param string $year 
+     * @param string $year
      *
      * @return self
      */
     public function setYear(string $year): self
     {
-        $this->_year = $year;
+        $this->year = $year;
 
         return $this;
     }
@@ -211,20 +194,20 @@ class Model extends EntityManager
      */
     public function getPrice(): string
     {
-        return $this->_price;
+        return $this->price;
     }
 
 
     /**
      * Set the value of _price
      *
-     * @param string $price 
+     * @param string $price
      *
      * @return self
      */
     public function setPrice(string $price): self
     {
-        $this->_price = $price;
+        $this->price = $price;
 
         return $this;
     }
@@ -237,20 +220,20 @@ class Model extends EntityManager
      */
     public function getCategory(): string
     {
-        return $this->_category;
+        return $this->category;
     }
 
 
     /**
      * Set the value of _category
      *
-     * @param string $category 
+     * @param string $category
      *
      * @return self
      */
     public function setCategory(string $category): self
     {
-        $this->_category = $category;
+        $this->category = $category;
 
         return $this;
     }
@@ -263,20 +246,20 @@ class Model extends EntityManager
      */
     public function getCreatedAt(): string
     {
-        return $this->_createdAt;
+        return $this->createdAt;
     }
 
 
     /**
      * Set the value of _createdAt
-     * 
-     * @param string $createdAt 
+     *
+     * @param string $createdAt
      *
      * @return self
      */
     public function setCreatedAt(string $createdAt): self
     {
-        $this->_createdAt = $createdAt;
+        $this->createdAt = $createdAt;
 
         return $this;
     }
@@ -289,20 +272,20 @@ class Model extends EntityManager
      */
     public function getModifiedAt(): string
     {
-        return $this->_modifiedAt;
+        return $this->modifiedAt;
     }
 
 
     /**
      * Set the value of _modifiedAt
      *
-     * @param string $modifiedAt 
+     * @param string $modifiedAt
      *
      * @return self
      */
     public function setModifiedAt(string $modifiedAt): self
     {
-        $this->_modifiedAt = $modifiedAt;
+        $this->modifiedAt = $modifiedAt;
 
         return $this;
     }

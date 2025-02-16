@@ -1,38 +1,24 @@
 <?php
 
-/**
- * Core file for defining the Bdd Manager class.
- * php version 8.2
- *
- * @category Core
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     damien-millet.dev
- */
-
 namespace Core;
 
 use Core\Config;
 
 /**
  * Class BddManager
- *
- * @category Core
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     damien-millet.dev
  */
 class BddManager
 {
-    private $_pdo;
+    /**
+     * @var \PDO The PDO instance for database connection.
+     */
+    private $pdo;
 
 
     /**
      * Constructor for the BddManager class.
      *
-     * @throws \PDOException if there is an error connecting to the database
+     * @return void
      */
     public function __construct()
     {
@@ -72,7 +58,7 @@ class BddManager
      */
     public function getPdo()
     {
-        return $this->_pdo;
+        return $this->pdo;
     }
 
 
@@ -83,9 +69,9 @@ class BddManager
      *
      * @return BddManager The current instance.
      */
-    public function setPDO(\PDO $pdo): BddManager
+    public function setPdo(\PDO $pdo): BddManager
     {
-        $this->_pdo = $pdo;
+        $this->pdo = $pdo;
         return $this;
     }
 
@@ -122,9 +108,9 @@ class BddManager
      */
     public function findAll(): array
     {
-        $class     = $this->_getEntityClass();
+        $class     = $this->getEntityClass();
         $pdo       = $this->getPdo();
-        $tableName = $this->_getTableName($class);
+        $tableName = $this->getTableName($class);
         $stmt      = $pdo->prepare("SELECT * FROM $tableName");
         $stmt->execute();
         return $stmt->fetchAll(\PDO::FETCH_CLASS, $class);
@@ -140,9 +126,9 @@ class BddManager
      */
     public function findOneById(int $id): ?object
     {
-        $class     = $this->_getEntityClass();
+        $class     = $this->getEntityClass();
         $pdo       = $this->getPdo();
-        $tableName = $this->_getTableName($class);
+        $tableName = $this->getTableName($class);
         $stmt      = $pdo->prepare("SELECT * FROM $tableName WHERE id = :id");
         $stmt->execute([':id' => $id]);
         $response = $stmt->fetchObject($class);
@@ -164,9 +150,9 @@ class BddManager
      */
     public function exist(string $key, string $value): bool
     {
-        $class     = $this->_getEntityClass();
+        $class     = $this->getEntityClass();
         $pdo       = $this->getPdo();
-        $tableName = $this->_getTableName($class);
+        $tableName = $this->getTableName($class);
         $stmt      = $pdo->prepare("SELECT * FROM $tableName WHERE $key = :value");
         $stmt->execute([':value' => $value]);
         $response = $stmt->fetchObject($class);
@@ -188,9 +174,9 @@ class BddManager
      */
     public function findOneBy(string $key, mixed $value): ?object
     {
-        $class     = $this->_getEntityClass();
+        $class     = $this->getEntityClass();
         $pdo       = $this->getPdo();
-        $tableName = $this->_getTableName($class);
+        $tableName = $this->getTableName($class);
         $stmt      = $pdo->prepare("SELECT * FROM $tableName WHERE $key = :key");
         $stmt->execute([':key' => $value]);
         return $stmt->fetchObject($class) ?: null;
@@ -207,9 +193,9 @@ class BddManager
     public function deleteOneById(string $id): int
     {
         try {
-            $class     = $this->_getEntityClass();
+            $class     = $this->getEntityClass();
             $pdo       = $this->getPdo();
-            $tableName = $this->_getTableName($class);
+            $tableName = $this->getTableName($class);
             $stmt      = $pdo->prepare("DELETE FROM $tableName WHERE id = :id");
             $stmt->execute([':id' => (int) $id]);
             $response = $stmt->rowCount() > 0;
@@ -224,11 +210,11 @@ class BddManager
     /**
      * Get the table name for a given class.
      *
-     * @param string $class The class name.
+     * @param string The class name.
      *
      * @return string The table name.
      */
-    private function _getTableName(string $class): string
+    private function getTableName(string $class): string
     {
         // Utiliser la réflexion pour obtenir le nom de la classe sans le namespace
         $reflection = new \ReflectionClass($class);
@@ -244,7 +230,7 @@ class BddManager
      *
      * @return string The entity class name.
      */
-    private function _getEntityClass(): string
+    private function getEntityClass(): string
     {
         // Utiliser la réflexion pour obtenir le nom de la classe du gestionnaire
         $reflection = new \ReflectionClass($this);
@@ -266,17 +252,21 @@ class BddManager
     protected function getCondition(string $operator): string
     {
         switch ($operator) {
-        case 'lt':
-            return "<";
-        case 'gt':
-            return ">";
-        case 'lte':
-            return "<=";
-        case 'gte':
-            return ">=";
-        case 'eq':
-        default:
-            return "=";
+            case 'lt':
+                return '<';
+
+            case 'gt':
+                return '>';
+
+            case 'lte':
+                return '<=';
+
+            case 'gte':
+                return '>=';
+
+            case 'eq':
+            default:
+                return '=';
         }
     }
 }

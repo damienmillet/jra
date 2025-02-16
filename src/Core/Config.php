@@ -15,6 +15,8 @@ class Config
     private static ?self $instance = null;
 
     /**
+     * Configuration settings.
+     *
      * @var array<mixed> $config Configuration settings.
      */
     private array $config = [];
@@ -106,7 +108,7 @@ class Config
 
         if (!file_exists($filePath) || !is_readable($filePath)) {
             throw new \RuntimeException(
-                "Configuration file not found or unreadable: $filePath"
+                'Configuration file not found or unreadable: ' . $filePath
             );
         }
 
@@ -123,7 +125,7 @@ class Config
 
             default:
                 throw new \RuntimeException(
-                    "Unsupported configuration file format: $extension"
+                    'Unsupported configuration file format: ' . $extension
                 );
         }
     }
@@ -156,7 +158,7 @@ class Config
 
         if ($lines === false) {
             throw new \RuntimeException(
-                "Error reading configuration file: $filePath"
+                'Error reading configuration file: ' . $filePath
             );
         }
 
@@ -167,8 +169,8 @@ class Config
             }
 
             [
-             $key,
-             $value,
+                $key,
+                $value,
             ] = explode('=', $line, 2);
 
             $key   = trim($key);
@@ -192,7 +194,7 @@ class Config
 
         if ($content === false) {
             throw new \RuntimeException(
-                "Error reading configuration file: $filePath"
+                'Error reading configuration file: ' . $filePath
             );
         }
 

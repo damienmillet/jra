@@ -1,16 +1,5 @@
 <?php
 
-/**
- * Service file for defining the UserService class.
- * php version 8.2
- *
- * @category Services
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     damien-millet.dev
- */
-
 namespace Services;
 
 use Entities\User;
@@ -19,12 +8,6 @@ use Core\Validator\ValidatorFactory;
 
 /**
  * Class UserService
- *
- * @category Services
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     damien-millet.dev
  */
 class UserService
 {
@@ -64,7 +47,7 @@ class UserService
     public static function getOneByUsername(string $username): ?User
     {
         $userManager = new UserManager();
-        return $userManager->findOneBy("name", $username);
+        return $userManager->findOneBy('name', $username);
     }
 
 
@@ -161,23 +144,23 @@ class UserService
      *
      * @param array $data The data to validate.
      *
-     * @return bool True if the data is valid, false otherwise.
+     * @return boolean True if the data is valid, false otherwise.
      */
-    public static function isValide(array &$data): bool
+    public static function isValid(array &$data): bool
     {
         $schema = [
             'username' => [
-                'type' => 'string',
+                'type'     => 'string',
                 'sanitize' => 'string',
                 'required' => false,
             ],
             'password' => [
-                'type' => 'string',
+                'type'     => 'string',
                 'sanitize' => 'string',
                 'required' => false,
             ],
         ];
-        
+
         return ValidatorFactory::validate($data, $schema);
     }
 
@@ -186,18 +169,18 @@ class UserService
      *
      * @param array $data The data to validate.
      *
-     * @return bool True if the data is valid, false otherwise.
+     * @return boolean True if the data is valid, false otherwise.
      */
-    public static function isValidePost(array &$data): bool
+    public static function isValidPost(array &$data): bool
     {
         $schema = [
             'username' => [
-                'type' => 'string',
+                'type'     => 'string',
                 'sanitize' => 'string',
                 'required' => true,
             ],
             'password' => [
-                'type' => 'string',
+                'type'     => 'string',
                 'sanitize' => 'string',
                 'required' => true,
             ],

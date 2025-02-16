@@ -1,28 +1,11 @@
 <?php
 
-/**
- * Http Message file for defining the Message class.
- * php version 8.2
- *
- * @category Core
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     damien-millet.dev
- */
-
 namespace Core\Http\Message;
 
 use Core\Http\Message\MessageInterface;
 
 /**
  * Class Message
- *
- * @category Core
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     damien-millet.dev
  */
 class Message implements MessageInterface
 {

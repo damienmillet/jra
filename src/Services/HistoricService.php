@@ -1,30 +1,17 @@
 <?php
 
-/**
- * Service file for defining the UserService class.
- * php version 8.2
- *
- * @category Services
- * @package  Jra
- * @author   Damien Millet <historic@damien-millet.dev>
- * @license  MIT License
- * @link     damien-millet.dev
- */
-
 namespace Services;
 
 use Managers\HistoricManager;
 use Services\ConvertService;
 
-
 /**
  * Class UserService
  *
- * @category Services
- * @package  Jra
- * @author   Damien Millet <historic@damien-millet.dev>
- * @license  MIT License
- * @link     damien-millet.dev
+ * @package Jra
+ * @author  Damien Millet <historic@damien-millet.dev>
+ * @license MIT License
+ * @link    damien-millet.dev
  */
 class HistoricService
 {
@@ -36,7 +23,7 @@ class HistoricService
     public static function getAll(): array
     {
         $historicManager = new HistoricManager();
-        $historics = $historicManager->findAll();
+        $historics       = $historicManager->findAll();
         return ConvertService::toObjectArray($historics);
     }
 

@@ -1,16 +1,5 @@
 <?php
 
-/**
- * Manager file for defining the UserManager class.
- * php version 8.2
- *
- * @category Services
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     damien-millet.dev
- */
-
 namespace Managers;
 
 use Entities\User;
@@ -19,12 +8,6 @@ use Services\ConvertService;
 
 /**
  * Class UserManager
- *
- * @category Managers
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     damien-millet.dev
  */
 class UserManager extends BddManager
 {

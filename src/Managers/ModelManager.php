@@ -1,16 +1,5 @@
 <?php
 
-/**
- * Manager file for defining the ModelManager class.
- * php version 8.2
- *
- * @category Managers
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     damien-millet.dev
- */
-
 namespace Managers;
 
 use Entities\Model;
@@ -19,12 +8,6 @@ use Services\ModelService;
 
 /**
  * Class ModelManager
- *
- * @category Managers
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     damien-millet.dev
  */
 class ModelManager extends BddManager
 {

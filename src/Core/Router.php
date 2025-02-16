@@ -1,73 +1,63 @@
 <?php
 
-/**
- * Core file for defining the Router class.
- * php version 8.2
- *
- * @category Core
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     damien-millet.dev
- */
-
 namespace Core;
 
 use Core\Request;
 use Core\Response;
-use Core\Auth\Role;
 use Middlewares\AuthMiddleware;
 use Core\Log\Logger;
+use Core\Route;
+use Exception;
 
 /**
  * Class Router
- *
- * @category Core
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     damien-millet.dev
  */
 class Router
 {
-    private array $_routes = [];
+    /**
+     * @var array<Route> The registered routes.
+     */
+    private array $routes = [];
 
-    private Logger $_logger;
+    /**
+     * @var Logger The logger instance.
+     */
+    private Logger $logger;
 
 
     /**
      * Router constructor.
      *
-     * @param Logger $logger Logger instance
+     * @param Logger $logger Logger instance.
      */
     public function __construct(Logger $logger)
     {
-        $this->_logger        = $logger;
+        $this->logger         = $logger;
         $controllersNamespace = 'Controllers';
         $controllersDirectory = __DIR__ . '/../Controllers';
-        $this->_registerAllControllers($controllersNamespace, $controllersDirectory);
+        $this->registerAllControllers($controllersNamespace, $controllersDirectory);
     }
 
 
     /**
      * Get all registered routes.
      *
-     * @return array The registered routes
+     * @return array<Route> The registered routes.
      */
     public function getRoutes(): array
     {
-        return $this->_routes;
+        return $this->routes;
     }
 
 
     /**
      * Register routes from the given controller.
      *
-     * @param object $controller The controller instance
+     * @param object $controller The controller instance.
      *
      * @return void
      */
-    private function _registerRoutes(object $controller): void
+    private function registerRoutes(object $controller): void
     {
         $reflection = new \ReflectionClass($controller);
 
@@ -75,7 +65,7 @@ class Router
             foreach ($method->getAttributes(Route::class) as $attribute) {
                 $route = $attribute->newInstance();
                 $route->setController($controller);
-                $this->_routes[] = $route;
+                $this->routes[] = $route;
             }
         }
     }
@@ -89,8 +79,8 @@ class Router
      *
      * @return void
      */
-    private function _registerAllControllers(
-        string $namespace, 
+    private function registerAllControllers(
+        string $namespace,
         string $directory
     ): void {
         foreach (glob($directory . '/*.php') as $filename) {
@@ -99,7 +89,7 @@ class Router
 
             if (class_exists($fullClassName)) {
                 $controller = new $fullClassName();
-                $this->_registerRoutes($controller);
+                $this->registerRoutes($controller);
             }
         }
     }
@@ -108,8 +98,8 @@ class Router
     /**
      * Handle the incoming request and send the appropriate response.
      *
-     * @param Request  $request  The incoming request
-     * @param Response $response The response to send
+     * @param Request  $request  The incoming request.
+     * @param Response $response The response to send.
      *
      * @return void
      */
@@ -132,10 +122,11 @@ class Router
 
                 $authData = [];
 
-                if ($route->getSecure() 
+                if (
+                    $route->getSecure()
                     && !AuthMiddleware::handle(
-                        $request, 
-                        $response, 
+                        $request,
+                        $response,
                         $route->getSecure()
                     )
                 ) {
@@ -146,13 +137,13 @@ class Router
                     die();
                 }
 
-                $this->_logger->log("$method $uri", 'info');
-                $this->_dispatch($route, [$request, $response]);
+                $this->logger->log("$method $uri", 'info');
+                $this->dispatch($route, [$request, $response]);
                 return;
             }
         }
 
-        $this->_logger->log("Route not found: $method $uri", 'error');
+        $this->logger->log("Route not found: $method $uri", 'error');
         $response->sendJson(
             ['error' => 'Route not found'],
             Response::HTTP_NOT_FOUND
@@ -164,25 +155,25 @@ class Router
     /**
      * Dispatch the route to the appropriate controller and method.
      *
-     * @param Route $route  The route to dispatch
-     * @param array $params The parameters to pass to the controller method
+     * @param Route                $route  The route to dispatch.
+     * @param array<string,string> $params The parameters to pass to the controller method.
      *
      * @return void
      */
-    private function _dispatch(Route $route, array $params): void
+    private function dispatch(Route $route, array $params): void
     {
         $controllerClass = $route->getController();
         $method          = $route->getMethod();
 
         if (!class_exists($controllerClass::class)) {
-            throw new \Exception("Controller '$controllerClass' not found");
+            throw new Exception('Controller not found');
         }
 
         $controller = new $controllerClass();
 
         if (!method_exists($controller, $method)) {
-            throw new \Exception(
-                "Method '$method' not found in controller '$controllerClass'"
+            throw new Exception(
+                "Method '$method' not found in controller"
             );
         }
 

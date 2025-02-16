@@ -1,32 +1,15 @@
 <?php
 
-/**
- * Service file for defining the AuthService class.
- * php version 8.2
- *
- * @category Services
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     damien-millet.dev
- */
-
 namespace Services;
 
 use Services\UserService;
 use Core\Validator\ValidatorFactory;
 use Core\Auth;
+use Entities\User;
 
 /**
  * Class AuthService
- *
- * @category Services
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     damien-millet.dev
  */
-
 class AuthService
 {
     /**
@@ -34,13 +17,13 @@ class AuthService
      *
      * @param string $username The username of the user.
      * @param string $password The password of the user.
-     * 
-     * @return string|false The generated token if login is successful, 
+     *
+     * @return string|false The generated token if login is successful,
      *                      false otherwise.
      */
-    public static function login($username, $password)
+    public static function login(string $username, string $password)
     {
-        $user  = UserService::getOneByUsername($username);
+        $user = UserService::getOneByUsername($username);
         if ($user && Auth::verifyPassword($password, $user->getHash())) {
             return self::generateToken($user);
         }
@@ -50,13 +33,13 @@ class AuthService
     /**
      * Generates a token for the given user.
      *
-     * @param object $user The user object for which the token is generated.
+     * @param User $user The user object for which the token is generated.
      *
      * @return string The generated token.
      */
-    public static function generateToken($user): string 
+    public static function generateToken(User $user): string
     {
-        $time  = new \DateTimeImmutable();
+        $time = new \DateTimeImmutable();
         return Auth::generateToken(
             [
                 'id'    => $user->getId(),
@@ -92,7 +75,7 @@ class AuthService
     }
 
     /**
-     * Refreshes the provided token by generating a new one with updated 
+     * Refreshes the provided token by generating a new one with updated
      * expiration time.
      *
      * @param string $token The token to be refreshed.
@@ -101,7 +84,7 @@ class AuthService
      */
     public static function refreshToken(string &$token): void
     {
-        $data = Auth::decodeToken($token);
+        $data  = Auth::decodeToken($token);
         $time  = new \DateTimeImmutable();
         $token = Auth::generateToken(
             [
@@ -126,20 +109,20 @@ class AuthService
     /**
      * Validate the provided data.
      *
-     * @param array $data The data to validate.
+     * @param array<string,string|boolean|array<mixed>> &$data The data to validate.
      *
-     * @return bool True if the data is valid, false otherwise.
+     * @return boolean True if the data is valid, false otherwise.
      */
-    public static function isValide(&$data): bool
+    public static function isValid(array &$data): bool
     {
         $schema = [
             'username' => [
-                'type' => 'string',
+                'type'     => 'string',
                 'sanitize' => 'string',
                 'required' => true,
             ],
             'password' => [
-                'type' => 'string',
+                'type'     => 'string',
                 'sanitize' => 'string',
                 'required' => true,
             ],

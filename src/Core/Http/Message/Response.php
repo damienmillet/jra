@@ -1,16 +1,5 @@
 <?php
 
-/**
- * Http Message file for defining the Response class.
- * php version 8.2
- *
- * @category Core
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     damien-millet.dev
- */
-
 namespace Core\Http\Message;
 
 use Core\Http\Message\Stream;
@@ -18,24 +7,18 @@ use Core\Http\Message\StatusCode;
 
 /**
  * Class Response
- *
- * @category Core
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     damien-millet.dev
  */
 class Response implements ResponseInterface
 {
-    private StatusCode $_statusCode;
+    private StatusCode $statusCode;
 
-    private string $_reasonPhrase;
+    private string $reasonPhrase;
 
-    private array $_headers = [];
+    private array $headers = [];
 
-    private StreamInterface $_body;
+    private StreamInterface $body;
 
-    private int $_protocolVersion = 1.1;
+    private int $protocolVersion = 1.1;
 
 
     /**
@@ -45,7 +28,7 @@ class Response implements ResponseInterface
      */
     public function getStatusCode(): StatusCode
     {
-        return $this->_statusCode;
+        return $this->statusCode;
     }
 
 
@@ -59,8 +42,8 @@ class Response implements ResponseInterface
      */
     public function withStatus($code, $reasonPhrase = ''): static
     {
-        $this->_statusCode   = StatusCode::from($code);
-        $this->_reasonPhrase = $reasonPhrase;
+        $this->statusCode   = StatusCode::from($code);
+        $this->reasonPhrase = $reasonPhrase;
         return $this;
     }
 
@@ -72,7 +55,7 @@ class Response implements ResponseInterface
      */
     public function getReasonPhrase(): string
     {
-        return $this->_reasonPhrase;
+        return $this->reasonPhrase;
     }
 
 
@@ -83,7 +66,7 @@ class Response implements ResponseInterface
      */
     public function getProtocolVersion(): int
     {
-        return $this->_protocolVersion;
+        return $this->protocolVersion;
     }
 
 
@@ -96,7 +79,7 @@ class Response implements ResponseInterface
      */
     public function withProtocolVersion($version): self
     {
-        $this->_protocolVersion = (int) $version;
+        $this->protocolVersion = (int) $version;
         return $this;
     }
 
@@ -108,7 +91,7 @@ class Response implements ResponseInterface
      */
     public function getHeaders(): array
     {
-        return $this->_headers;
+        return $this->headers;
     }
 
 
@@ -121,7 +104,7 @@ class Response implements ResponseInterface
      */
     public function hasHeader($name): bool
     {
-        return isset($this->_headers[$name]);
+        return isset($this->headers[$name]);
     }
 
 
@@ -134,7 +117,7 @@ class Response implements ResponseInterface
      */
     public function getHeader($name): array
     {
-        return ($this->_headers[$name] ?? []);
+        return ($this->headers[$name] ?? []);
     }
 
 
@@ -147,7 +130,7 @@ class Response implements ResponseInterface
      */
     public function getHeaderLine($name): string
     {
-        return implode(', ', ($this->_headers[$name] ?? []));
+        return implode(', ', ($this->headers[$name] ?? []));
     }
 
 
@@ -161,7 +144,7 @@ class Response implements ResponseInterface
      */
     public function withHeader($name, $value): self
     {
-        $this->_headers[$name] = $value;
+        $this->headers[$name] = $value;
         return $this;
     }
 
@@ -176,7 +159,7 @@ class Response implements ResponseInterface
      */
     public function withAddedHeader($name, $value): self
     {
-        $this->_headers[$name] = $value;
+        $this->headers[$name] = $value;
         return $this;
     }
 
@@ -190,7 +173,7 @@ class Response implements ResponseInterface
      */
     public function withoutHeader($name): self
     {
-        $this->_headers[$name] = [];
+        $this->headers[$name] = [];
         return $this;
     }
 
@@ -202,7 +185,7 @@ class Response implements ResponseInterface
      */
     public function getBody(): StreamInterface
     {
-        return $this->_body;
+        return $this->body;
     }
 
 
@@ -215,7 +198,7 @@ class Response implements ResponseInterface
      */
     public function withBody(StreamInterface $body): self
     {
-        $this->_body = $body;
+        $this->body = $body;
         return $this;
     }
 

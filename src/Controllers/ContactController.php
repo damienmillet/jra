@@ -1,16 +1,5 @@
 <?php
 
-/**
- * Controller file for handling contact-related actions.
- * php version 8.2
- *
- * @category Controllers
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     https://damien-millet.dev
- */
-
 namespace Controllers;
 
 use Core\Auth\Role;
@@ -21,15 +10,10 @@ use Entities\Contact;
 use Services\ContactService;
 use Core\Validator\Validator;
 use Managers\ContactManager;
+
 /**
  * Class ContactController
  * Controller for handling contact-related actions.
- *
- * @category Controllers
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     https://damien-millet.dev
  */
 class ContactController
 {
@@ -49,7 +33,7 @@ class ContactController
 
         try {
             if (!$id) {
-                $page = $request->get('page'); 
+                $page  = $request->get('page');
                 $limit = $request->get('limit');
 
                 if ($page && !Validator::isInteger($page)) {
@@ -74,8 +58,7 @@ class ContactController
                 }
 
                 if ($page && $limit) {
-
-                    $offset = ($page - 1) * $limit;
+                    $offset   = (($page - 1) * $limit);
                     $contacts = ContactService::getPaginated($limit, $offset);
                     return $response->sendJson($contacts, Response::HTTP_OK);
                 }
@@ -123,9 +106,9 @@ class ContactController
     #[Route(path: '/api/contacts/{id}', method: 'PUT', secure: Role::ADMIN)]
     public function put(Request $request, Response $response): Response
     {
-        $id = $request->getParam('id');
+        $id       = $request->getParam('id');
         $operator = $request->getAuthData()['payload']['id'];
-        
+
         if (!Validator::isId($id)) {
             return $response->sendJson(
                 ['error' => 'Invalid format id : waiting for an integer'],
@@ -135,11 +118,11 @@ class ContactController
 
         try {
             $contactManager = new ContactManager();
-            $contact = $contactManager->findOneById($id);
+            $contact        = $contactManager->findOneById($id);
             if ($contact) {
                 $json = $request->getJson();
 
-                if (!$json ||!ContactService::isValide($json)) {
+                if (!$json || !ContactService::isValid($json)) {
                     return $response->sendJson(
                         ['error' => 'Invalid data'],
                         Response::HTTP_BAD_REQUEST
@@ -148,7 +131,7 @@ class ContactController
 
                 $prepared = ContactService::prepare($json, $contact);
 
-                $updated  = $contactManager->updateOne($prepared, $operator);
+                $updated = $contactManager->updateOne($prepared, $operator);
 
 
                 if ($updated instanceof Contact) {
@@ -186,7 +169,7 @@ class ContactController
     #[Route('/api/contacts/{id}', 'PATCH', Role::ADMIN)]
     public function patch(Request $request, Response $response): Response
     {
-        $id = $request->getParam('id');
+        $id       = $request->getParam('id');
         $operator = $request->getAuthData()['payload']['id'];
 
         if (!Validator::isId($id)) {
@@ -200,9 +183,9 @@ class ContactController
             $contactManager = new ContactManager();
             $contact        = $contactManager->findOneById($id);
             if ($contact) {
-                $json     = $request->getJson();
+                $json = $request->getJson();
 
-                if (!$json ||!ContactService::isValide($json)) {
+                if (!$json || !ContactService::isValid($json)) {
                     return $response->sendJson(
                         ['error' => 'Invalid data'],
                         Response::HTTP_BAD_REQUEST
@@ -211,7 +194,7 @@ class ContactController
 
                 $prepared = ContactService::prepare($json, $contact);
 
-                $updated  = $contactManager->updateOne($prepared, $operator);
+                $updated = $contactManager->updateOne($prepared, $operator);
 
                 if ($updated instanceof Contact) {
                     return $response->sendJson($updated->toArray());
@@ -297,9 +280,9 @@ class ContactController
     {
         try {
             $contactManager = new ContactManager();
-            $json = $request->getJson();
+            $json           = $request->getJson();
 
-            if (!$json || !ContactService::isValidePost($json)) {
+            if (!$json || !ContactService::isValidPost($json)) {
                 return $response->sendJson(
                     ['error' => 'Invalid data'],
                     Response::HTTP_BAD_REQUEST
@@ -307,7 +290,7 @@ class ContactController
             }
 
             $prepared = ContactService::prepare($json);
-            $res = $contactManager->insertOne($prepared);
+            $res      = $contactManager->insertOne($prepared);
 
             // retourne le contact si $res est un Contact
             if ($res instanceof Contact) {

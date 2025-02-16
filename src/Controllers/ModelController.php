@@ -1,16 +1,5 @@
 <?php
 
-/**
- * Controller file for handling model-related actions.
- * php version 8.2
- *
- * @category Controllers
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     https://damien-millet.dev
- */
-
 namespace Controllers;
 
 use Core\Auth\Role;
@@ -25,12 +14,6 @@ use Core\Validator\Validator;
 /**
  * Class ModelController
  * Controller for handling model-related actions.
- *
- * @category Controllers
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     https://damien-millet.dev
  */
 class ModelController
 {
@@ -49,8 +32,7 @@ class ModelController
         $id = $request->getParam('id');
 
         try {
-
-            if (!$id) {
+            if ($id === null) {
                 $users = ModelService::getAll();
                 return $response->sendJson($users);
             }
@@ -106,7 +88,7 @@ class ModelController
 
         try {
             $modelManager = new ModelManager();
-            $model  = $modelManager->findOneById((int) $id);
+            $model        = $modelManager->findOneById((int) $id);
             if ($model) {
                 $json = $request->getJson();
 
@@ -120,7 +102,7 @@ class ModelController
                     'category',
                 ];
 
-                $jsonVars = get_object_vars($json);
+                $jsonVars    = get_object_vars($json);
                 $missingKeys = array_diff($requiredKeys, array_keys($jsonVars));
 
                 if (empty($json) || !empty($missingKeys)) {
@@ -132,7 +114,7 @@ class ModelController
 
                 $prepared = ModelService::prepare($json, $model);
 
-                $updated  = $modelManager->updateOne($prepared);
+                $updated = $modelManager->updateOne($prepared);
 
                 if ($updated instanceof Model) {
                     return $response->sendJson($updated->toArray());
@@ -162,7 +144,7 @@ class ModelController
      *
      * @param Request  $request  The request object.
      * @param Response $response The response object.
-     * 
+     *
      * @return Response
      */
     #[Route(path: '/api/models/{id}', method: 'PATCH', secure: Role::ADMIN)]

@@ -1,52 +1,35 @@
 <?php
 
-/**
- * Core file for defining the Auth class.
- * php version 8.2
- *
- * @category Core
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     damien-millet.dev
- */
-
 namespace Core;
 
 use Core\Clock\Clock;
 
 /**
  * Class Auth
- *
- * @category Core
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     damien-millet.dev
  */
 class Auth
 {
     /**
      * Generates a JWT token.
      *
-     * @param array $data The data to be encoded in the token.
+     * @param array<mixed> $data The data to be encoded in the token.
      *
      * @return string The generated JWT token.
      */
-    public static function generateToken($data)
+    public static function generateToken(array $data)
     {
         $config = Config::getInstance();
         $key    = $config->get('TOKEN_KEY', 'TOKEN_KEY');
 
         $header           = json_encode(['alg' => 'HS256', 'typ' => 'JWT']);
         $payload          = json_encode($data);
-        $base64UrlHeader  = self::_base64UrlEncode($header);
-        $base64UrlPayload = self::_base64UrlEncode($payload);
-        $dataToSign       = "$base64UrlHeader.$base64UrlPayload";
+        $base64UrlHeader  = self::base64UrlEncode($header);
+        $base64UrlPayload = self::base64UrlEncode($payload);
+        $dataToSign       = $base64UrlHeader . '.' . $base64UrlPayload;
         $rawSignature     = hash_hmac('sha256', $dataToSign, $key, true);
-        $signature        = self::_base64UrlEncode($rawSignature);
+        $signature        = self::base64UrlEncode($rawSignature);
 
-        return "$base64UrlHeader.$base64UrlPayload.$signature";
+        return $base64UrlHeader . '.' . $base64UrlPayload . '.' . $signature;
     }
 
 
@@ -65,7 +48,7 @@ class Auth
     //     list($header, $payload, $signature) = explode('.', $token);
     //     $dataToSign     = "$header.$payload";
     //     $rawSignature   = hash_hmac('sha256', $dataToSign, $key, true);
-    //     $validSignature = self::_base64UrlEncode($rawSignature);
+    //     $validSignature = self::base64UrlEncode($rawSignature);
     //     return hash_equals($validSignature, $signature);
     // }
 
@@ -74,7 +57,7 @@ class Auth
      *
      * @param string $token The JWT token to be verified and decoded.
      *
-     * @return array The decoded payload if the token is valid,
+     * @return array<mixed> The decoded payload if the token is valid,
      *                     error otherwise.
      */
     public static function verifyAndDecodeToken(string $token)
@@ -103,22 +86,25 @@ class Auth
         // Verify the signature
         $dataToSign     = "$header.$payload";
         $rawSignature   = hash_hmac('sha256', $dataToSign, $key, true);
-        $validSignature = self::_base64UrlEncode($rawSignature);
+        $validSignature = self::base64UrlEncode($rawSignature);
 
         if (!hash_equals($validSignature, $signature)) {
             return ['error' => 'Invalid token'];
             // Signature does not match
         }
 
-        $time = (new Clock())->now()->getTimestamp();
+        $clock = new Clock();
+        $time  = $clock->now()->getTimestamp();
 
-        if (isset($decodedPayload['exp']) && $decodedPayload['exp'] < $time
+        if (
+            isset($decodedPayload['exp']) && $decodedPayload['exp'] < $time
         ) {
             return ['error' => 'Expired token'];
             // Token has expired
         }
 
-        if (!isset($decodedPayload['exp'])
+        if (
+            !isset($decodedPayload['exp'])
             || !isset($decodedPayload['id'])
             || !isset($decodedPayload['name'])
             || !isset($decodedPayload['roles'])
@@ -136,7 +122,7 @@ class Auth
      *
      * @param string $token The JWT token to verify.
      *
-     * @return array An array containing either the valid payload or an error message.
+     * @return array<mixed> An array containing either the valid payload or an error message.
      */
     public static function verifyToken(string $token): array
     {
@@ -154,25 +140,27 @@ class Auth
         $signature = $decoded['signature'];
 
         // Verify the signature
-        $dataToSign     = "$header.$payload";
+        $dataToSign     = $header . '.' . $payload;
         $rawSignature   = hash_hmac('sha256', $dataToSign, $key, true);
-        $validSignature = self::_base64UrlEncode($rawSignature);
+        $validSignature = self::base64UrlEncode($rawSignature);
 
         if (!hash_equals($validSignature, $signature)) {
             return ['error' => 'Invalid token'];
             // Signature does not match
         }
+        $clock = new Clock();
+        $time  = $clock->now()->getTimestamp();
 
-        $time = (new Clock())->now()->getTimestamp();
-
-        if (isset($decoded['payload']['exp']) 
+        if (
+            isset($decoded['payload']['exp'])
             && $decoded['payload']['exp'] < $time
         ) {
             return ['error' => 'Expired token'];
             // Token has expired
         }
 
-        if (!isset($decoded['payload']['exp'])
+        if (
+            !isset($decoded['payload']['exp'])
             || !isset($decoded['payload']['id'])
             || !isset($decoded['payload']['name'])
             || !isset($decoded['payload']['roles'])
@@ -190,7 +178,7 @@ class Auth
      *
      * @param string $token The JWT token to decode.
      *
-     * @return array The decoded components (header, payload) if successful,
+     * @return array<mixed> The decoded components (header, payload) if successful,
      *               or an error array if invalid.
      */
     public static function decodeToken(string $token): array
@@ -227,7 +215,7 @@ class Auth
      *
      * @return string The Base64 URL encoded data.
      */
-    private static function _base64UrlEncode($data)
+    private static function base64UrlEncode(string $data)
     {
         return rtrim(strtr(base64_encode($data), '+/', '-_'), '=');
     }
@@ -241,7 +229,7 @@ class Auth
      *
      * @return boolean True if the password matches the hash, false otherwise.
      */
-    public static function verifyPassword($password, $hash)
+    public static function verifyPassword(string $password, string $hash)
     {
         return password_verify($password, $hash);
     }
@@ -256,7 +244,7 @@ class Auth
      */
     public static function verifyCsrfToken(string $csrfToken): bool
     {
-        $storedToken = $_SESSION['csrf_token'] ?? null;
+        $storedToken = $SESSION['csrf_token'] ?? null;
         // Exemple avec session
         return hash_equals($storedToken, $csrfToken);
     }
@@ -273,7 +261,7 @@ class Auth
         $allowedOrigins = $config->get('ALLOWED_ORIGIN', default: '*');
 
         if (!empty($allowedOrigins)) {
-            $origin = ($_SERVER['HTTP_ORIGIN'] ?? '');
+            $origin = ($SERVER['HTTP_ORIGIN'] ?? '');
 
             if (!in_array($origin, $allowedOrigins)) {
                 header('HTTP/1.1 403 Forbidden');

@@ -4,15 +4,12 @@ namespace Core\Log;
 
 /**
  * Class LoggerAware
- *
- * @category Core
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     damien-millet.dev
  */
 class LoggerAware implements LoggerAwareInterface
 {
+    /**
+     * @var LoggerInterface The logger instance.
+     */
     protected $logger;
 
 
@@ -21,7 +18,7 @@ class LoggerAware implements LoggerAwareInterface
      *
      * This method allows you to set a logger instance on the object.
      *
-     * @param LoggerInterface $logger
+     * @param LoggerInterface $logger Logger Interface.
      *
      * @return void
      */

@@ -17,16 +17,16 @@ namespace Core\Http\Message;
  * Additionally, it encapsulates all data as it has arrived at the
  * application from the CGI and/or PHP environment, including:
  *
- * - The values represented in $_SERVER.
- * - Any cookies provided (generally via $_COOKIE)
- * - Query string arguments (generally via $_GET, or as parsed via parse_str())
- * - Upload files, if any (as represented by $_FILES)
- * - Deserialized body parameters (generally from $_POST)
+ * - The values represented in $SERVER.
+ * - Any cookies provided (generally via $COOKIE)
+ * - Query string arguments (generally via $GET, or as parsed via parse_str())
+ * - Upload files, if any (as represented by $FILES)
+ * - Deserialized body parameters (generally from $POST)
  *
- * $_SERVER values MUST be treated as immutable, as they represent application
+ * $SERVER values MUST be treated as immutable, as they represent application
  * state at the time of request; as such, no methods are provided to allow
  * modification of those values. The other values provide such methods, as they
- * can be restored from $_SERVER or the request body, and may need treatment
+ * can be restored from $SERVER or the request body, and may need treatment
  * during the application (e.g., body parameters may be deserialized based on
  * content type).
  *
@@ -46,8 +46,8 @@ interface ServerRequestInterface extends RequestInterface
      * Retrieve server parameters.
      *
      * Retrieves data related to the incoming request environment,
-     * typically derived from PHP's $_SERVER superglobal. The data IS NOT
-     * REQUIRED to originate from $_SERVER.
+     * typically derived from PHP's $SERVER superglobal. The data IS NOT
+     * REQUIRED to originate from $SERVER.
      *
      * @return array
      */
@@ -59,7 +59,7 @@ interface ServerRequestInterface extends RequestInterface
      *
      * Retrieves cookies sent by the client to the server.
      *
-     * The data MUST be compatible with the structure of the $_COOKIE
+     * The data MUST be compatible with the structure of the $COOKIE
      * superglobal.
      *
      * @return array
@@ -70,8 +70,8 @@ interface ServerRequestInterface extends RequestInterface
     /**
      * Return an instance with the specified cookies.
      *
-     * The data IS NOT REQUIRED to come from the $_COOKIE superglobal, but MUST
-     * be compatible with the structure of $_COOKIE. Typically, this data will
+     * The data IS NOT REQUIRED to come from the $COOKIE superglobal, but MUST
+     * be compatible with the structure of $COOKIE. Typically, this data will
      * be injected at instantiation.
      *
      * This method MUST NOT update the related Cookie header of the request
@@ -107,7 +107,7 @@ interface ServerRequestInterface extends RequestInterface
      *
      * These values SHOULD remain immutable over the course of the incoming
      * request. They MAY be injected during instantiation, such as from PHP's
-     * $_GET superglobal, or MAY be derived from some other value such as the
+     * $GET superglobal, or MAY be derived from some other value such as the
      * URI. In cases where the arguments are parsed from the URI, the data
      * MUST be compatible with what PHP's parse_str() would return for
      * purposes of how duplicate query parameters are handled, and how nested
@@ -121,7 +121,7 @@ interface ServerRequestInterface extends RequestInterface
      * updated query string arguments.
      *
      * @param  array $query Array of query string arguments, typically from
-     *                      $_GET.
+     *                      $GET.
      * @return static
      */
     public function withQueryParams(array $query);
@@ -133,7 +133,7 @@ interface ServerRequestInterface extends RequestInterface
      * This method returns upload metadata in a normalized tree, with each leaf
      * an instance of Psr\Http\Message\UploadedFileInterface.
      *
-     * These values MAY be prepared from $_FILES or the message body during
+     * These values MAY be prepared from $FILES or the message body during
      * instantiation, or MAY be injected via withUploadedFiles().
      *
      * @return array An array tree of UploadedFileInterface instances; an empty
@@ -161,7 +161,7 @@ interface ServerRequestInterface extends RequestInterface
      *
      * If the request Content-Type is either application/x-www-form-urlencoded
      * or multipart/form-data, and the request method is POST, this method MUST
-     * return the contents of $_POST.
+     * return the contents of $POST.
      *
      * Otherwise, this method may return any results of deserializing
      * the request body content; as parsing returns structured content, the
@@ -181,9 +181,9 @@ interface ServerRequestInterface extends RequestInterface
      *
      * If the request Content-Type is either application/x-www-form-urlencoded
      * or multipart/form-data, and the request method is POST, use this method
-     * ONLY to inject the contents of $_POST.
+     * ONLY to inject the contents of $POST.
      *
-     * The data IS NOT REQUIRED to come from $_POST, but MUST be the results of
+     * The data IS NOT REQUIRED to come from $POST, but MUST be the results of
      * deserializing the request body content. Deserialization/parsing returns
      * structured data, and, as such, this method ONLY accepts arrays or objects,
      * or a null value if nothing was available to parse.

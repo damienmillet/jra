@@ -1,58 +1,41 @@
 <?php
 
-/**
- * Entity file for defining the Historic Entity class.
- * php version 8.2
- *
- * @category Entities
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     damien-millet.dev
- */
-
 namespace Entities;
 
 use Core\EntityManager;
 
 /**
  * Class HistoricEntity
- *
- * @category Entities
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     damien-millet.dev
  */
 class Historic extends EntityManager
 {
-    private int $_id = 0;
-    private int $_contactId;
-    private string $_columnName;
-    private string $_oldValue;
-    private string $_newValue;
-    private string $_modifiedAt;
-    private int $_modifiedBy;
+    private int $id = 0;
+    private int $contactId;
+    private string $columnName;
+    private string $oldValue;
+    private string $newValue;
+    private string $modifiedAt;
+    private int $modifiedBy;
 
     // Getters
     /**
      * Get the ID.
      *
-     * @return int The ID.
+     * @return integer The ID.
      */
     public function getId(): int
     {
-        return $this->_id;
+        return $this->id;
     }
 
     /**
      * Get the contact ID.
      *
-     * @return int The contact ID.
+     * @return integer The contact ID.
      */
     public function getContactId(): int
     {
-        return $this->_contactId;
+        return $this->contactId;
     }
 
     /**
@@ -62,7 +45,7 @@ class Historic extends EntityManager
      */
     public function getColumnName(): string
     {
-        return $this->_columnName;
+        return $this->columnName;
     }
 
     /**
@@ -72,7 +55,7 @@ class Historic extends EntityManager
      */
     public function getOldValue(): string
     {
-        return $this->_oldValue;
+        return $this->oldValue;
     }
 
     /**
@@ -82,7 +65,7 @@ class Historic extends EntityManager
      */
     public function getNewValue(): string
     {
-        return $this->_newValue;
+        return $this->newValue;
     }
 
     /**
@@ -92,43 +75,43 @@ class Historic extends EntityManager
      */
     public function getModifiedAt(): string
     {
-        return $this->_modifiedAt;
+        return $this->modifiedAt;
     }
 
     /**
      * Get the modified by user ID.
      *
-     * @return int The modified by user ID.
+     * @return integer The modified by user ID.
      */
     public function getModifiedBy(): int
     {
-        return $this->_modifiedBy;
+        return $this->modifiedBy;
     }
 
     // Setters
     /**
      * Set the ID.
      *
-     * @param int $id The ID.
-     * 
+     * @param integer $id The ID.
+     *
      * @return Historic
      */
     public function setId(int $id): static
     {
-        $this->_id = $id;
+        $this->id = $id;
         return $this;
     }
 
     /**
      * Set the contact ID.
      *
-     * @param int $contactId The contact ID.
-     * 
+     * @param integer $contactId The contact ID.
+     *
      * @return Historic
      */
     public function setContactId(int $contactId): static
     {
-        $this->_contactId = $contactId;
+        $this->contactId = $contactId;
         return $this;
     }
 
@@ -136,12 +119,12 @@ class Historic extends EntityManager
      * Set the column name.
      *
      * @param string $columnName The column name.
-     * 
+     *
      * @return Historic
      */
     public function setColumnName(string $columnName): static
     {
-        $this->_columnName = $columnName;
+        $this->columnName = $columnName;
         return $this;
     }
 
@@ -149,12 +132,12 @@ class Historic extends EntityManager
      * Set the old value.
      *
      * @param string $oldValue The old value.
-     * 
+     *
      * @return Historic
      */
     public function setOldValue(string $oldValue): static
     {
-        $this->_oldValue = $oldValue;
+        $this->oldValue = $oldValue;
         return $this;
     }
 
@@ -162,12 +145,12 @@ class Historic extends EntityManager
      * Set the new value.
      *
      * @param string $newValue The new value.
-     * 
+     *
      * @return Historic
      */
     public function setNewValue(string $newValue): static
     {
-        $this->_newValue = $newValue;
+        $this->newValue = $newValue;
         return $this;
     }
 
@@ -175,25 +158,25 @@ class Historic extends EntityManager
      * Set the modified at date.
      *
      * @param string $modifiedAt The modified at date.
-     * 
+     *
      * @return Historic
      */
     public function setModifiedAt(string $modifiedAt): static
     {
-        $this->_modifiedAt = $modifiedAt;
+        $this->modifiedAt = $modifiedAt;
         return $this;
     }
 
     /**
      * Set the modified by user ID.
      *
-     * @param int $modifiedBy The modified by user ID.
-     * 
+     * @param integer $modifiedBy The modified by user ID.
+     *
      * @return Historic
      */
     public function setModifiedBy(int $modifiedBy): static
     {
-        $this->_modifiedBy = $modifiedBy;
+        $this->modifiedBy = $modifiedBy;
         return $this;
     }
 

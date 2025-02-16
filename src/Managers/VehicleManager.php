@@ -1,16 +1,5 @@
 <?php
 
-/**
- * Manager file for defining the VehicleManager class.
- * php version 8.2
- *
- * @category Managers
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     damien-millet.dev
- */
-
 namespace Managers;
 
 use Entities\Vehicle;
@@ -19,12 +8,6 @@ use Services\VehicleService;
 
 /**
  * Class VehicleManager
- *
- * @category Managers
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     damien-millet.dev
  */
 class VehicleManager extends BddManager
 {
@@ -79,7 +62,7 @@ class VehicleManager extends BddManager
      *
      * @param Vehicle $vehicle The vehicle object to insert.
      *
-     * @return Vehicle|null|string The inserted vehicle object or null if insertion failed.
+     * @return Vehicle|string The inserted vehicle object or null if insertion failed.
      */
     public function insertOne(Vehicle $vehicle): Vehicle|string
     {

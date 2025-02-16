@@ -1,16 +1,5 @@
 <?php
 
-/**
- * Entity file for defining the File Entity class.
- * php version 8.2
- *
- * @category Entities
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     damien-millet.dev
- */
-
 namespace Entities;
 
 use Core\Auth\Role;
@@ -18,23 +7,17 @@ use Core\EntityManager;
 
 /**
  * Class FileEntity
- *
- * @category Entities
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     damien-millet.dev
  */
 class File extends EntityManager
 {
-    private int $_id;
-    private string $_name;
-    private string $_path;
-    private int $_size;
-    private string $_mimeType;
-    private string $_type;
-    private mixed $_blob;
-    private string $_tmpName;
+    private int $id;
+    private string $name;
+    private string $path;
+    private int $size;
+    private string $mimeType;
+    private string $type;
+    private mixed $blob;
+    private string $tmpName;
 
     /**
      * Get the temporary name of the file.
@@ -43,7 +26,7 @@ class File extends EntityManager
      */
     public function getTmpName(): string
     {
-        return $this->_tmpName;
+        return $this->tmpName;
     }
 
     /**
@@ -55,7 +38,7 @@ class File extends EntityManager
      */
     public function setTmpName(string $tmpName): self
     {
-        $this->_tmpName = $tmpName;
+        $this->tmpName = $tmpName;
         return $this;
     }
     /**
@@ -65,7 +48,7 @@ class File extends EntityManager
      */
     public function getType(): string
     {
-        return $this->_type;
+        return $this->type;
     }
 
     /**
@@ -77,7 +60,7 @@ class File extends EntityManager
      */
     public function setType(string $type): self
     {
-        $this->_type = $type;
+        $this->type = $type;
         return $this;
     }
 
@@ -88,7 +71,7 @@ class File extends EntityManager
      */
     public function getBlob()
     {
-        return $this->_blob;
+        return $this->blob;
     }
 
     /**
@@ -100,30 +83,30 @@ class File extends EntityManager
      */
     public function setBlob($blob): self
     {
-        $this->_blob = $blob;
+        $this->blob = $blob;
         return $this;
     }
 
     /**
      * Get the ID of the file.
      *
-     * @return int The ID of the file.
+     * @return integer The ID of the file.
      */
     public function getId(): int
     {
-        return $this->_id;
+        return $this->id;
     }
 
     /**
      * Set the ID of the file.
      *
-     * @param int $id The ID of the file.
+     * @param integer $id The ID of the file.
      *
      * @return self
      */
     public function setId(int $id): self
     {
-        $this->_id = $id;
+        $this->id = $id;
         return $this;
     }
 
@@ -134,7 +117,7 @@ class File extends EntityManager
      */
     public function getName(): string
     {
-        return $this->_name;
+        return $this->name;
     }
 
     /**
@@ -146,7 +129,7 @@ class File extends EntityManager
      */
     public function setName(string $name): self
     {
-        $this->_name = $name;
+        $this->name = $name;
         return $this;
     }
 
@@ -157,7 +140,7 @@ class File extends EntityManager
      */
     public function getPath(): string
     {
-        return $this->_path;
+        return $this->path;
     }
 
     /**
@@ -169,30 +152,30 @@ class File extends EntityManager
      */
     public function setPath(string $path): self
     {
-        $this->_path = $path;
+        $this->path = $path;
         return $this;
     }
 
     /**
      * Get the size of the file in bytes.
      *
-     * @return int The size of the file in bytes.
+     * @return integer The size of the file in bytes.
      */
     public function getSize(): int
     {
-        return $this->_size;
+        return $this->size;
     }
 
     /**
      * Set the size of the file in bytes.
      *
-     * @param int $size The size of the file in bytes.
+     * @param integer $size The size of the file in bytes.
      *
      * @return self
      */
     public function setSize(int $size): self
     {
-        $this->_size = $size;
+        $this->size = $size;
         return $this;
     }
 
@@ -203,7 +186,7 @@ class File extends EntityManager
      */
     public function getMimeType(): string
     {
-        return $this->_mimeType;
+        return $this->mimeType;
     }
 
     /**
@@ -215,10 +198,10 @@ class File extends EntityManager
      */
     public function setMimeType(string $mimeType): self
     {
-        $this->_mimeType = $mimeType;
+        $this->mimeType = $mimeType;
         return $this;
     }
-   
+
 
 
     /**
@@ -229,7 +212,7 @@ class File extends EntityManager
     public function toArray(): array
     {
         return [
-            'id'           => $this->getId(),
+            'id' => $this->getId(),
         ];
     }
 

@@ -1,38 +1,21 @@
 <?php
 
-/**
- * Http Message file for defining the Stream class.
- * php version 8.2
- *
- * @category Core
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     damien-millet.dev
- */
-
 namespace Core\Http\Message;
 
 /**
  * Class Stream
- *
- * @category Core
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     damien-millet.dev
  */
 class Stream implements StreamInterface
 {
-    private $_stream;
+    private $stream;
 
-    private $_meta;
+    private $meta;
 
-    private $_readable;
+    private $readable;
 
-    private $_writable;
+    private $writable;
 
-    private $_seekable;
+    private $seekable;
 
 
     /**
@@ -45,17 +28,17 @@ class Stream implements StreamInterface
     public function __construct($stream)
     {
         if (is_string($stream)) {
-            $this->_stream = fopen($stream, 'r+');
+            $this->stream = fopen($stream, 'r+');
         } elseif (is_resource($stream)) {
-            $this->_stream = $stream;
+            $this->stream = $stream;
         } else {
             throw new \InvalidArgumentException('Invalid stream provided');
         }
 
-        $this->_meta     = stream_get_meta_data($this->_stream);
-        $this->_readable = isset($this->_meta['mode']) && (strstr($this->_meta['mode'], 'r') || strstr($this->_meta['mode'], '+'));
-        $this->_writable = isset($this->_meta['mode']) && (strstr($this->_meta['mode'], 'w') || strstr($this->_meta['mode'], '+'));
-        $this->_seekable = $this->_meta['seekable'];
+        $this->meta     = stream_get_meta_data($this->stream);
+        $this->readable = isset($this->meta['mode']) && (strstr($this->meta['mode'], 'r') || strstr($this->meta['mode'], '+'));
+        $this->writable = isset($this->meta['mode']) && (strstr($this->meta['mode'], 'w') || strstr($this->meta['mode'], '+'));
+        $this->seekable = $this->meta['seekable'];
     }
 
 
@@ -66,12 +49,12 @@ class Stream implements StreamInterface
      */
     public function __toString()
     {
-        if (!$this->_stream) {
+        if (!$this->stream) {
             return '';
         }
 
         $this->rewind();
-        return stream_get_contents($this->_stream);
+        return stream_get_contents($this->stream);
     }
 
 
@@ -82,9 +65,9 @@ class Stream implements StreamInterface
      */
     public function close()
     {
-        if ($this->_stream) {
-            fclose($this->_stream);
-            $this->_stream = null;
+        if ($this->stream) {
+            fclose($this->stream);
+            $this->stream = null;
         }
     }
 
@@ -96,8 +79,8 @@ class Stream implements StreamInterface
      */
     public function detach()
     {
-        $result        = $this->_stream;
-        $this->_stream = null;
+        $result       = $this->stream;
+        $this->stream = null;
         return $result;
     }
 
@@ -109,11 +92,11 @@ class Stream implements StreamInterface
      */
     public function getSize()
     {
-        if (!$this->_stream) {
+        if (!$this->stream) {
             return null;
         }
 
-        $stats = fstat($this->_stream);
+        $stats = fstat($this->stream);
         return $stats['size'] ?? null;
     }
 
@@ -126,11 +109,11 @@ class Stream implements StreamInterface
      */
     public function tell()
     {
-        if (!$this->_stream) {
+        if (!$this->stream) {
             throw new \RuntimeException('Stream is not available');
         }
 
-        $result = ftell($this->_stream);
+        $result = ftell($this->stream);
         if ($result === false) {
             throw new \RuntimeException('Unable to determine stream position');
         }
@@ -146,7 +129,7 @@ class Stream implements StreamInterface
      */
     public function eof()
     {
-        return $this->_stream ? feof($this->_stream) : true;
+        return $this->stream ? feof($this->stream) : true;
     }
 
 
@@ -157,7 +140,7 @@ class Stream implements StreamInterface
      */
     public function isSeekable()
     {
-        return $this->_seekable;
+        return $this->seekable;
     }
 
 
@@ -172,11 +155,11 @@ class Stream implements StreamInterface
      */
     public function seek($offset, $whence = SEEK_SET)
     {
-        if (!$this->_seekable) {
+        if (!$this->seekable) {
             throw new \RuntimeException('Stream is not seekable');
         }
 
-        if (fseek($this->_stream, $offset, $whence) === -1) {
+        if (fseek($this->stream, $offset, $whence) === -1) {
             throw new \RuntimeException('Unable to seek in stream');
         }
     }
@@ -200,7 +183,7 @@ class Stream implements StreamInterface
      */
     public function isWritable(): bool
     {
-        return $this->_writable;
+        return $this->writable;
     }
 
 
@@ -214,11 +197,11 @@ class Stream implements StreamInterface
      */
     public function write($string)
     {
-        if (!$this->_writable) {
+        if (!$this->writable) {
             throw new \RuntimeException('Stream is not writable');
         }
 
-        fwrite($this->_stream, $string);
+        fwrite($this->stream, $string);
     }
 
 
@@ -229,7 +212,7 @@ class Stream implements StreamInterface
      */
     public function isReadable(): bool
     {
-        return $this->_readable;
+        return $this->readable;
     }
 
 
@@ -243,11 +226,11 @@ class Stream implements StreamInterface
      */
     public function read($length)
     {
-        if (!$this->_readable) {
+        if (!$this->readable) {
             throw new \RuntimeException('Stream is not readable');
         }
 
-        return fread($this->_stream, $length);
+        return fread($this->stream, $length);
     }
 
 
@@ -259,11 +242,11 @@ class Stream implements StreamInterface
      */
     public function getContents()
     {
-        if (!$this->_stream) {
+        if (!$this->stream) {
             throw new \RuntimeException('Stream is not available');
         }
 
-        return stream_get_contents($this->_stream);
+        return stream_get_contents($this->stream);
     }
 
 
@@ -277,11 +260,11 @@ class Stream implements StreamInterface
      */
     public function getMetadata($key = null)
     {
-        if (!$this->_stream) {
+        if (!$this->stream) {
             return null;
         }
 
-        $meta = stream_get_meta_data($this->_stream);
+        $meta = stream_get_meta_data($this->stream);
         if ($key === null) {
             return $meta;
         }
@@ -297,7 +280,7 @@ class Stream implements StreamInterface
      */
     public function getStream()
     {
-        return $this->_stream;
+        return $this->stream;
     }
 
 
@@ -310,7 +293,7 @@ class Stream implements StreamInterface
      */
     public function setStream($stream)
     {
-        $this->_stream = $stream;
+        $this->stream = $stream;
     }
 
 
@@ -321,7 +304,7 @@ class Stream implements StreamInterface
      */
     public function getMeta()
     {
-        return $this->_meta;
+        return $this->meta;
     }
 
 
@@ -334,7 +317,7 @@ class Stream implements StreamInterface
      */
     public function setMeta($meta)
     {
-        $this->_meta = $meta;
+        $this->meta = $meta;
     }
 
 
@@ -345,7 +328,7 @@ class Stream implements StreamInterface
      */
     private function _getReadable()
     {
-        return $this->_readable;
+        return $this->readable;
     }
 
 
@@ -358,7 +341,7 @@ class Stream implements StreamInterface
      */
     public function setReadable($readable)
     {
-        $this->_readable = $readable;
+        $this->readable = $readable;
     }
 
 
@@ -369,7 +352,7 @@ class Stream implements StreamInterface
      */
     public function getWritable()
     {
-        return $this->_writable;
+        return $this->writable;
     }
 
 
@@ -382,7 +365,7 @@ class Stream implements StreamInterface
      */
     public function setWritable($writable)
     {
-        $this->_writable = $writable;
+        $this->writable = $writable;
     }
 
 
@@ -393,7 +376,7 @@ class Stream implements StreamInterface
      */
     public function getSeekable()
     {
-        return $this->_seekable;
+        return $this->seekable;
     }
 
 
@@ -406,6 +389,6 @@ class Stream implements StreamInterface
      */
     public function setSeekable($seekable)
     {
-        $this->_seekable = $seekable;
+        $this->seekable = $seekable;
     }
 }

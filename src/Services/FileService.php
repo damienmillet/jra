@@ -1,16 +1,5 @@
 <?php
 
-/**
- * Service file for defining the FileService class.
- * php version 8.2
- *
- * @category Services
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     damien-millet.dev
- */
-
 namespace Services;
 
 use Entities\User;
@@ -19,12 +8,6 @@ use Managers\FileManager;
 
 /**
  * Class FileService
- *
- * @category Services
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     damien-millet.dev
  */
 class FileService
 {
@@ -43,7 +26,7 @@ class FileService
     /**
      * Get a user by ID.
      *
-     * @param int $id The ID of the user.
+     * @param integer $id The ID of the user.
      *
      * @return User|null The user object or null if not found.
      */
@@ -53,7 +36,7 @@ class FileService
         return $userManager->findOneById($id);
     }
 
-    
+
     /**
      * Prepare a file object with the provided data.
      *
@@ -68,9 +51,9 @@ class FileService
     ) {
 
         $data['path'] = $data['full_path'];
-        $file = $file->hydrate($data);
-        $content = file_get_contents($data['tmp_name']);
-        $blob = base64_decode($content);
+        $file         = $file->hydrate($data);
+        $content      = file_get_contents($data['tmp_name']);
+        $blob         = base64_decode($content);
         $file->setBlob($blob);
 
         return $file;

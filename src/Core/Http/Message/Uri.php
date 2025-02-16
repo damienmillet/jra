@@ -9,65 +9,65 @@ use Core\Http\Message\UriInterface;
  */
 class Uri implements UriInterface
 {
-    private string $_scheme;
+    private string $scheme;
 
-    private string $_host;
+    private string $host;
 
-    private int $_port;
+    private int $port;
 
-    private string $_path;
+    private string $path;
 
-    private string $_query;
+    private string $query;
 
-    private string $_fragment;
+    private string $fragment;
 
 
     public function __construct(string $scheme, string $host, int $port, string $path, string $query, string $fragment)
     {
-        $this->_scheme   = $scheme;
-        $this->_host     = $host;
-        $this->_port     = $port;
-        $this->_path     = $path;
-        $this->_query    = $query;
-        $this->_fragment = $fragment;
+        $this->scheme   = $scheme;
+        $this->host     = $host;
+        $this->port     = $port;
+        $this->path     = $path;
+        $this->query    = $query;
+        $this->fragment = $fragment;
     }
 
 
     public function getScheme(): string
     {
-        return $this->_scheme;
+        return $this->scheme;
     }
 
 
     public function getHost(): string
     {
-        return $this->_host;
+        return $this->host;
     }
 
 
     public function getPort(): int
     {
-        return $this->_port;
+        return $this->port;
     }
 
 
     public function getPath(): string
     {
-        return $this->_path;
+        return $this->path;
     }
 
 
     public function getQuery(): string
     {
-        return $this->_query;
+        return $this->query;
     }
 
 
     public function getAuthority(): string
     {
-        $authority = $this->_host;
-        if ($this->_port) {
-            $authority .= ':' . $this->_port;
+        $authority = $this->host;
+        if ($this->port) {
+            $authority .= ':' . $this->port;
         }
 
         return $authority;
@@ -90,7 +90,7 @@ class Uri implements UriInterface
 
     public function __toString(): string
     {
-        return $this->_scheme . '://' . $this->getAuthority() . $this->_path . '?' . $this->_query . '#' . $this->_fragment;
+        return $this->scheme . '://' . $this->getAuthority() . $this->path . '?' . $this->query . '#' . $this->fragment;
     }
 
 
@@ -144,6 +144,6 @@ class Uri implements UriInterface
 
     public function getFragment(): string
     {
-        return $this->_fragment;
+        return $this->fragment;
     }
 }

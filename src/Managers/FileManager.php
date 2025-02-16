@@ -1,16 +1,5 @@
 <?php
 
-/**
- * Manager file for defining the FileManager class.
- * php version 8.2
- *
- * @category Managers
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     damien-millet.dev
- */
-
 namespace Managers;
 
 use Entities\File;
@@ -18,12 +7,6 @@ use Core\BddManager;
 
 /**
  * Class FileManager
- *
- * @category Managers
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     damien-millet.dev
  */
 class FileManager extends BddManager
 {
@@ -45,11 +28,11 @@ class FileManager extends BddManager
 
         $isUpdated = $stmt->execute(
             [
-                ':name'  => $file->getName(),
-                ':type'  => $file->getType(),
-                ':path'  => $file->getPath(),
-                ':blob'  => $file->getBlob(),
-                ':id'    => $file->getId(),
+                ':name' => $file->getName(),
+                ':type' => $file->getType(),
+                ':path' => $file->getPath(),
+                ':blob' => $file->getBlob(),
+                ':id'   => $file->getId(),
             ]
         );
 
@@ -88,10 +71,10 @@ class FileManager extends BddManager
             );
             $stmt->execute(
                 [
-                    ':name'  => $file->getName(),
-                    ':type'  => $file->getType(),
-                    ':path'  => $file->getPath(),
-                    ':blob'  => $file->getBlob(),
+                    ':name' => $file->getName(),
+                    ':type' => $file->getType(),
+                    ':path' => $file->getPath(),
+                    ':blob' => $file->getBlob(),
                 ]
             );
 
@@ -108,13 +91,13 @@ class FileManager extends BddManager
     /**
      * Find a file by its ID.
      *
-     * @param int $id The ID of the file.
+     * @param integer $id The ID of the file.
      *
      * @return File|null The file object or null if not found.
      */
     public function findOneById(int $id): ?File
     {
-        $pdo = $this->getPdo();
+        $pdo  = $this->getPdo();
         $stmt = $pdo->prepare('SELECT * FROM files WHERE id = :id');
         $stmt->execute([':id' => $id]);
 
@@ -127,11 +110,11 @@ class FileManager extends BddManager
          * @param string $field The field to check.
          * @param mixed  $value The value to check.
          *
-         * @return bool True if the file exists, false otherwise.
+         * @return boolean True if the file exists, false otherwise.
          */
     public function exist(string $field, $value): bool
     {
-        $pdo = $this->getPdo();
+        $pdo  = $this->getPdo();
         $stmt = $pdo->prepare("SELECT COUNT(*) FROM files WHERE $field = :value");
         $stmt->execute([':value' => $value]);
 
@@ -141,13 +124,13 @@ class FileManager extends BddManager
     /**
      * Check if a file exists by contact ID.
      *
-     * @param int $contactId The contact ID to check.
+     * @param integer $contactId The contact ID to check.
      *
-     * @return bool True if a file exists for the contact, false otherwise.
+     * @return boolean True if a file exists for the contact, false otherwise.
      */
     public function existByContactId(int $contactId): bool
     {
-        $pdo = $this->getPdo();
+        $pdo  = $this->getPdo();
         $stmt = $pdo->prepare(
             'SELECT COUNT(*) 
             FROM files f
@@ -162,13 +145,13 @@ class FileManager extends BddManager
     /**
      * Find all files by contact ID.
      *
-     * @param int $contactId The contact ID to find files for.
+     * @param integer $contactId The contact ID to find files for.
      *
      * @return array An array of File objects.
      */
     public function findAllByContactId(int $contactId): array
     {
-        $pdo = $this->getPdo();
+        $pdo  = $this->getPdo();
         $stmt = $pdo->prepare(
             'SELECT f.* 
             FROM files f
@@ -179,5 +162,4 @@ class FileManager extends BddManager
 
         return $stmt->fetchAll(\PDO::FETCH_CLASS, File::class);
     }
-
 }

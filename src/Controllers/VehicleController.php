@@ -1,16 +1,5 @@
 <?php
 
-/**
- * Controller file for handling vehicle-related actions.
- * php version 8.2
- *
- * @category Controllers
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     https://damien-millet.dev
- */
-
 namespace Controllers;
 
 use Core\Auth\Role;
@@ -25,12 +14,6 @@ use Core\Validator\Validator;
 /**
  * Class VehicleController
  * Controller for handling vehicle-related actions.
- *
- * @category Controllers
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     https://damien-millet.dev
  */
 class VehicleController
 {
@@ -49,8 +32,7 @@ class VehicleController
         $id = $request->getParam('id');
 
         try {
-
-            if (!$id) {
+            if ($id === null) {
                 $users = VehicleService::getAll();
                 return $response->sendJson($users);
             }
@@ -65,7 +47,7 @@ class VehicleController
 
             $vehicle = VehicleService::getOneById($id);
 
-            if ($vehicle && $vehicle instanceof Vehicle) {
+            if ($vehicle !== null && $vehicle instanceof Vehicle) {
                 return $response->sendJson($vehicle->toArray());
             } else {
                 return $response->sendJson(
@@ -106,19 +88,29 @@ class VehicleController
 
         try {
             $vehicleManager = new VehicleManager();
-            $vehicle        = $vehicleManager->findOneById($id);
-            if ($vehicle) {
+            $vehicle        = $vehicleManager->findOneById((int) $id);
+            if ($vehicle !== null) {
                 $json = $request->getJson();
 
                 $requiredKeys = [
-                    'name', 'model_id', 'buy_price', 'buy_date', 'type', 
-                    'fuel', 'km', 'cv', 'color', 'transmission', 'doors', 'seats'
+                    'name',
+                    'model_id',
+                    'buy_price',
+                    'buy_date',
+                    'type',
+                    'fuel',
+                    'km',
+                    'cv',
+                    'color',
+                    'transmission',
+                    'doors',
+                    'seats',
                 ];
 
-                $jsonVars = get_object_vars($json);
+                $jsonVars    = get_object_vars($json);
                 $missingKeys = array_diff($requiredKeys, array_keys($jsonVars));
 
-                
+
                 if (empty($json) || !empty($missingKeys)) {
                     $response->sendJson(
                         ['error' => 'Missing data: ' . implode(', ', $missingKeys)],
@@ -176,17 +168,15 @@ class VehicleController
         try {
             $vehicleManager = new VehicleManager();
             $vehicle        = $vehicleManager->findOneById($id);
-            if ($vehicle) {
-
-                $json     = $request->getJson();
+            if ($vehicle !== null) {
+                $json = $request->getJson();
 
                 $prepared = VehicleService::prepare($json, $vehicle);
 
-                $updated  = $vehicleManager->updateOne($prepared);
+                $updated = $vehicleManager->updateOne($prepared);
 
                 if ($updated instanceof Vehicle) {
                     return $response->sendJson($updated->toArray());
-                    
                 }
                 return $response->sendJson(
                     ['error' => 'An error occurred'],
@@ -233,9 +223,9 @@ class VehicleController
 
         try {
             $vehicle = $vehicleManager->findOneById((int) $id);
-            if ($vehicle) {
+            if ($vehicle !== null) {
                 $deleted = $vehicleManager->deleteOneById($vehicle->getId());
-                if ($deleted) {
+                if (is_numeric($deleted)) {
                     return $response->send('', Response::HTTP_NO_CONTENT);
                 }
             }

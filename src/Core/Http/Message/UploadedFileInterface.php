@@ -49,7 +49,7 @@ interface UploadedFileInterface
      * If this method is called more than once, any subsequent calls MUST raise
      * an exception.
      *
-     * When used in an SAPI environment where $_FILES is populated, when writing
+     * When used in an SAPI environment where $FILES is populated, when writing
      * files via moveTo(), is_uploaded_file() and move_uploaded_file() SHOULD be
      * used to ensure permissions and upload status are verified correctly.
      *
@@ -70,7 +70,7 @@ interface UploadedFileInterface
      * Retrieve the file size.
      *
      * Implementations SHOULD return the value stored in the "size" key of
-     * the file in the $_FILES array if available, as PHP calculates this based
+     * the file in the $FILES array if available, as PHP calculates this based
      * on the actual size transmitted.
      *
      * @return integer|null The file size in bytes or null if unknown.
@@ -87,7 +87,7 @@ interface UploadedFileInterface
      * UPLOAD_ERR_OK.
      *
      * Implementations SHOULD return the value stored in the "error" key of
-     * the file in the $_FILES array.
+     * the file in the $FILES array.
      *
      * @see    http://php.net/manual/en/features.file-upload.errors.php
      * @return integer One of PHP's UPLOAD_ERR_XXX constants.
@@ -103,7 +103,7 @@ interface UploadedFileInterface
      * application.
      *
      * Implementations SHOULD return the value stored in the "name" key of
-     * the file in the $_FILES array.
+     * the file in the $FILES array.
      *
      * @return string|null The filename sent by the client or null if none
      *     was provided.
@@ -119,7 +119,7 @@ interface UploadedFileInterface
      * application.
      *
      * Implementations SHOULD return the value stored in the "type" key of
-     * the file in the $_FILES array.
+     * the file in the $FILES array.
      *
      * @return string|null The media type sent by the client or null if none
      *     was provided.

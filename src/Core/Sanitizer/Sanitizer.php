@@ -3,7 +3,8 @@
 namespace Core\Sanitizer;
 
 /**
- * Class Sanitizer */
+ * Class Sanitizer
+ */
 class Sanitizer
 {
     /**
@@ -71,7 +72,7 @@ class Sanitizer
             throw new \InvalidArgumentException('Invalid integer');
         }
 
-        return (int) $sanitized;
+        return (int)$sanitized;
     }
 
     /**
@@ -93,7 +94,7 @@ class Sanitizer
             throw new \InvalidArgumentException('Invalid integer');
         }
 
-        return (float) $sanitized;
+        return (float)$sanitized;
     }
 
     /**
@@ -111,7 +112,7 @@ class Sanitizer
             throw new \InvalidArgumentException('Invalid JSON');
         }
 
-        return (array) $decoded;
+        return (array)$decoded;
     }
 
     /**

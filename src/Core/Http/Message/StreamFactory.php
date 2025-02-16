@@ -8,12 +8,6 @@ use Core\Http\Message\StreamInterface;
 /**
  * Class StreamFactory
  * Factory for creating Stream instances.
- *
- * @category Core
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     https://damien-millet.dev
  */
 class StreamFactory implements StreamFactoryInterface
 {
@@ -26,7 +20,7 @@ class StreamFactory implements StreamFactoryInterface
      */
     public function createStream(string $content = ''): StreamInterface
     {
-        return $this->createFromResource($this->_createMemoryStream($content));
+        return $this->createFromResource($this->createMemoryStream($content));
     }
 
 

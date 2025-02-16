@@ -1,16 +1,5 @@
 <?php
 
-/**
- * Service file for defining the UserService class.
- * php version 8.2
- *
- * @category Services
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     damien-millet.dev
- */
-
 namespace Services;
 
 use Core\Validator\ValidatorFactory;
@@ -18,15 +7,8 @@ use Entities\Contact;
 use Managers\ContactManager;
 use Services\ConvertService;
 
-
 /**
  * Class UserService
- *
- * @category Services
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     damien-millet.dev
  */
 class ContactService
 {
@@ -38,22 +20,22 @@ class ContactService
     public static function getAll(): array
     {
         $contactManager = new ContactManager();
-        $contacts = $contactManager->findAll();
-        return ConvertService::toObjectArray($contacts);;
+        $contacts       = $contactManager->findAll();
+        return ConvertService::toObjectArray($contacts);
     }
 
     /**
      * Get paginated list of contacts.
      *
-     * @param int $limit The number of contacts per page.
-     * @param int $offet The page number.
+     * @param integer $limit The number of contacts per page.
+     * @param integer $offet The page number.
      *
      * @return array The paginated list of contacts.
      */
     public static function getPaginated(int $limit, int $offet): array
     {
         $contactManager = new ContactManager();
-        $contacts = $contactManager->findAllPaginated($limit, $offet);
+        $contacts       = $contactManager->findAllPaginated($limit, $offet);
         return $contacts; // ConvertService::toObjectArray($contacts);
     }
 
@@ -90,18 +72,18 @@ class ContactService
      *
      * @param array $data The data to validate.
      *
-     * @return bool True if the data is valid, false otherwise.
+     * @return boolean True if the data is valid, false otherwise.
      */
-    public static function isValide(&$data): bool
+    public static function isValid(&$data): bool
     {
         $schema = [
-            'name' => [
-                'type' => 'string',
+            'name'  => [
+                'type'     => 'string',
                 'sanitize' => 'string',
                 'required' => false,
             ],
             'email' => [
-                'type' => 'string',
+                'type'     => 'string',
                 'sanitize' => 'email',
                 'required' => false,
             ],
@@ -115,18 +97,18 @@ class ContactService
      *
      * @param array $data The data to validate.
      *
-     * @return bool True if the data is valid, false otherwise.
+     * @return boolean True if the data is valid, false otherwise.
      */
-    public static function isValidePost(&$data): bool
+    public static function isValidPost(&$data): bool
     {
         $schema = [
-            'name' => [
-                'type' => 'string',
+            'name'  => [
+                'type'     => 'string',
                 'sanitize' => 'string',
                 'required' => true,
             ],
             'email' => [
-                'type' => 'string',
+                'type'     => 'string',
                 'sanitize' => 'email',
                 'required' => true,
             ],

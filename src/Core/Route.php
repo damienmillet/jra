@@ -1,54 +1,72 @@
 <?php
 
-/**
- * Core file for defining the Route class.
- * php version 8.2
- *
- * @category Core
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     damien-millet.dev
- */
-
 namespace Core;
 
 use Core\Auth\Role;
 
 /**
  * Class Route
- *
- * @category Core
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     damien-millet.dev
  */
 #[\Attribute]
 class Route
 {
-    private string $_action;
+    /**
+     * The action of the route.
+     *
+     * @var string
+     */
+    private string $action;
 
-    private string $_method;
+    /**
+     * The HTTP method of the route.
+     *
+     * @var string
+     */
+    private string $method;
 
-    private string $_path;
+    /**
+     * The path of the route.
+     *
+     * @var string
+     */
+    private string $path;
 
-    private bool|Role $_secure;
+    /**
+     * Indicates if the route is secure or the role required.
+     *
+     * @var boolean|Role
+     */
+    private bool|Role $secure;
 
-    private array $_params;
+    /**
+     * The parameters of the route.
+     *
+     * @var array<string,string>
+     */
+    private array $params;
 
-    private object $_controller;
+    /**
+     * The controller handling the route.
+     *
+     * @var object
+     */
+    private object $controller;
 
-    private string $_pattern;
+    /**
+     * The pattern of the route.
+     *
+     * @var string
+     */
+    private string $pattern;
 
 
     /**
      * Constructor for the Route class.
      *
-     * @param string       $path   The path of the route.
-     * @param string       $method The HTTP method of the route.
-     * @param boolean|Role $secure The security level of the route.
-     * @param array        $params The parameters of the route.
+     * @param string               $path   The path of the route.
+     * @param string               $method The HTTP method of the route.
+     * @param boolean|Role         $secure The security level of the route.
+     * @param array<string,string> $params The parameters of the route.
      */
     public function __construct(
         string $path,
@@ -72,20 +90,20 @@ class Route
      */
     public function getPath(): string
     {
-        return $this->_path;
+        return $this->path;
     }
 
 
     /**
      * Set the path of the route.
      *
-     * @param string $path 
+     * @param string $path The path to set.
      *
-     * @return Route
+     * @return Route The current instance.
      */
     public function setPath(string $path): Route
     {
-        $this->_path = $path;
+        $this->path = $path;
         return $this;
     }
 
@@ -93,24 +111,24 @@ class Route
     /**
      * Get the HTTP method of the route.
      *
-     * @return string
+     * @return string The HTTP method of the route.
      */
     public function getMethod(): string
     {
-        return $this->_method;
+        return $this->method;
     }
 
 
     /**
      * Set the HTTP method of the route.
      *
-     * @param string $method 
+     * @param string $method The HTTP method to set.
      *
-     * @return Route
+     * @return Route The current instance.
      */
     public function setMethod(string $method): Route
     {
-        $this->_method = $method;
+        $this->method = $method;
         return $this;
     }
 
@@ -118,24 +136,24 @@ class Route
     /**
      * Get the action of the route.
      *
-     * @return string
+     * @return string The action of the route.
      */
     public function getAction(): string
     {
-        return $this->_action;
+        return $this->action;
     }
 
 
     /**
      * Set the action of the route.
      *
-     * @param string $method 
+     * @param string $method The method to set as action.
      *
      * @return Route
      */
     public function setAction(string $method): Route
     {
-        $this->_action = strtolower($method);
+        $this->action = strtolower($method);
         return $this;
     }
 
@@ -149,7 +167,7 @@ class Route
      */
     public function setController(object $controller): Route
     {
-        $this->_controller = $controller;
+        $this->controller = $controller;
         return $this;
     }
 
@@ -161,7 +179,7 @@ class Route
      */
     public function getController(): object
     {
-        return $this->_controller;
+        return $this->controller;
     }
 
 
@@ -172,20 +190,20 @@ class Route
      */
     public function getSecure(): bool|Role
     {
-        return $this->_secure;
+        return $this->secure;
     }
 
 
     /**
      * Set the security level of the route.
      *
-     * @param boolean|Role $secure 
+     * @param boolean|Role $secure The security level to set.
      *
      * @return Route
      */
     public function setSecure(bool|Role $secure): Route
     {
-        $this->_secure = $secure;
+        $this->secure = $secure;
         return $this;
     }
 
@@ -193,24 +211,24 @@ class Route
     /**
      * Get the parameters of the route.
      *
-     * @return array
+     * @return array<string,string>
      */
     public function getParams(): array
     {
-        return $this->_params;
+        return $this->params;
     }
 
 
     /**
      * Set the parameters of the route.
      *
-     * @param array $params 
+     * @param array<string,string> $params The parameters to set.
      *
      * @return Route
      */
     public function setParams(array $params): Route
     {
-        $this->_params = $params;
+        $this->params = $params;
         return $this;
     }
 
@@ -224,24 +242,26 @@ class Route
      */
     public function setPattern(string $path): Route
     {
-        $this->_pattern = rtrim($path, '/') . '(?:/)?';
+        $this->pattern = rtrim($path, '/') . '(?:/)?';
 
-        $this->_pattern = preg_replace_callback(
+        $this->pattern = preg_replace_callback(
             '/\{(:?)([a-zA-Z0-9_]+)\}/',
-            function ($matches) {
-                return str_contains($matches[1], ':') 
-                    ? '(?:(?P<' . $matches[2] . '>[^/]*))?' // Paramètre optionnel
-                    : '(?P<' . $matches[2] . '>[^/]+)'; // Paramètre obligatoire
+            function (array $matches): string {
+                return str_contains($matches[1], ':')
+                    ? '(?:(?P<' . $matches[2] . '>[^/]*))?'
+                    // Paramètre optionnel
+                    : '(?P<' . $matches[2] . '>[^/]+)';
+                // Paramètre obligatoire
             },
             $path
         );
 
         // Supprimer les doubles slashs dans le chemin
-        $this->_pattern = preg_replace('#//+#', '/', $this->_pattern);
+        $this->pattern = preg_replace('#//+#', '/', $this->pattern);
 
         // Assurer que l'URL fonctionne avec ou sans slash final
-        if (!str_ends_with($this->_pattern, '/?')) {
-            $this->_pattern = rtrim($this->_pattern, '/') . '(?:/)?';
+        if (!str_ends_with($this->pattern, '/?')) {
+            $this->pattern = rtrim($this->pattern, '/') . '(?:/)?';
         }
 
         return $this;
@@ -255,7 +275,7 @@ class Route
      */
     public function getPattern(): string
     {
-        return $this->_pattern;
+        return $this->pattern;
     }
 
 

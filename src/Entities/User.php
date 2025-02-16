@@ -1,16 +1,5 @@
 <?php
 
-/**
- * Entity file for defining the User Entity class.
- * php version 8.2
- *
- * @category Entities
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     damien-millet.dev
- */
-
 namespace Entities;
 
 use Core\Auth\Role;
@@ -18,19 +7,13 @@ use Core\EntityManager;
 
 /**
  * Class UserEntity
- *
- * @category Entities
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     damien-millet.dev
  */
 class User extends EntityManager
 {
-    private int $_id = 0;
-    private string $_name;
-    private array $_roles = [];
-    private string $_hash;
+    private int $id = 0;
+    private string $name;
+    private array $roles = [];
+    private string $hash;
 
     /**
      * Setter of the user ID.
@@ -41,7 +24,7 @@ class User extends EntityManager
      */
     public function setId(int $id): User
     {
-        $this->_id = $id;
+        $this->id = $id;
         return $this;
     }
 
@@ -55,7 +38,7 @@ class User extends EntityManager
      */
     public function setName(string $name): User
     {
-        $this->_name = $name;
+        $this->name = $name;
         return $this;
     }
 
@@ -69,7 +52,7 @@ class User extends EntityManager
      */
     public function setRoles(array $roles): User
     {
-        $this->_roles = $roles;
+        $this->roles = $roles;
         return $this;
     }
 
@@ -81,7 +64,7 @@ class User extends EntityManager
      */
     public function getHash(): string
     {
-        return $this->_hash;
+        return $this->hash;
     }
 
 
@@ -94,7 +77,7 @@ class User extends EntityManager
      */
     public function setHash(string $hash): User
     {
-        $this->_hash = $hash;
+        $this->hash = $hash;
         return $this;
     }
 
@@ -106,7 +89,7 @@ class User extends EntityManager
      */
     public function getRoles(): array
     {
-        return $this->_roles;
+        return $this->roles;
     }
 
 
@@ -119,7 +102,7 @@ class User extends EntityManager
      */
     public function addRole(Role $role): void
     {
-        $this->_roles[] = $role;
+        $this->roles[] = $role;
     }
 
 
@@ -132,9 +115,9 @@ class User extends EntityManager
      */
     public function delRole(Role $role): void
     {
-        $key = array_search($role, $this->_roles);
+        $key = array_search($role, $this->roles);
         if ($key !== false) {
-            unset($this->_roles[$key]);
+            unset($this->roles[$key]);
         }
     }
 
@@ -146,7 +129,7 @@ class User extends EntityManager
      */
     public function getId(): int
     {
-        return $this->_id;
+        return $this->id;
     }
 
 
@@ -157,7 +140,7 @@ class User extends EntityManager
      */
     public function getName(): string
     {
-        return $this->_name;
+        return $this->name;
     }
 
 

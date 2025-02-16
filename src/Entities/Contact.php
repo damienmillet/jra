@@ -1,40 +1,23 @@
 <?php
 
-/**
- * Entity file for defining the Contact Entity class.
- * php version 8.2
- *
- * @category Entities
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     damien-millet.dev
- */
-
 namespace Entities;
 
 use Core\EntityManager;
 
 /**
  * Class ContactEntity
- *
- * @category Entities
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     damien-millet.dev
  */
 class Contact extends EntityManager
 {
-    private int $_id = 0;
+    private int $id = 0;
 
-    private string $_name;
+    private string $name;
 
-    private string $_email;
+    private string $email;
 
-    private string $_createdAt;
+    private string $createdAt;
 
-    private string $_modifiedAt;
+    private string $modifiedAt;
 
 
     /**
@@ -44,7 +27,7 @@ class Contact extends EntityManager
      */
     public function getEmail(): string
     {
-        return $this->_email;
+        return $this->email;
     }
 
 
@@ -57,7 +40,7 @@ class Contact extends EntityManager
      */
     public function setEmail(string $email): Contact
     {
-        $this->_email = $email;
+        $this->email = $email;
         return $this;
     }
 
@@ -69,7 +52,7 @@ class Contact extends EntityManager
      */
     public function getCreatedAt(): string
     {
-        return $this->_createdAt;
+        return $this->createdAt;
     }
 
 
@@ -82,7 +65,7 @@ class Contact extends EntityManager
      */
     public function setCreatedAt(string $createdAt): Contact
     {
-        $this->_createdAt = $createdAt;
+        $this->createdAt = $createdAt;
         return $this;
     }
 
@@ -94,7 +77,7 @@ class Contact extends EntityManager
      */
     public function getModifiedAt(): string
     {
-        return $this->_modifiedAt;
+        return $this->modifiedAt;
     }
 
 
@@ -107,7 +90,7 @@ class Contact extends EntityManager
      */
     public function setModifiedAt(string $modifiedAt): Contact
     {
-        $this->_modifiedAt = $modifiedAt;
+        $this->modifiedAt = $modifiedAt;
         return $this;
     }
 
@@ -119,7 +102,7 @@ class Contact extends EntityManager
      */
     public function getId(): int
     {
-        return $this->_id;
+        return $this->id;
     }
 
 
@@ -132,7 +115,7 @@ class Contact extends EntityManager
      */
     public function setId(int $id): Contact
     {
-        $this->_id = $id;
+        $this->id = $id;
         return $this;
     }
 
@@ -144,7 +127,7 @@ class Contact extends EntityManager
      */
     public function getName(): string
     {
-        return $this->_name;
+        return $this->name;
     }
 
 
@@ -157,7 +140,7 @@ class Contact extends EntityManager
      */
     public function setName(string $name): Contact
     {
-        $this->_name = $name;
+        $this->name = $name;
         return $this;
     }
 

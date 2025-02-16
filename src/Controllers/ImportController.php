@@ -1,16 +1,5 @@
 <?php
 
-/**
- * Controller file for handling user-related actions.
- * php version 8.2
- *
- * @category Controllers
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     https://damien-millet.dev
- */
-
 namespace Controllers;
 
 use Core\Auth\Role;
@@ -24,13 +13,7 @@ use Entities\Contact;
 /**
  * Class ExportController
  * Controller for handling user-related actions.
- *
- * @category Controllers
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     https://damien-millet.dev
- */
+ * */
 class ImportController
 {
     /**
@@ -59,7 +42,7 @@ class ImportController
         $existingContacts = $contactManager->findAllByIds(array_column($csvData, 'id'));
 
         // Initialisation des listes pour les ajouts et mises à jour
-        $contactsToAdd = [];
+        $contactsToAdd    = [];
         $contactsToUpdate = [];
 
         // Traitement des données CSV
@@ -69,7 +52,7 @@ class ImportController
 
             // Si le contact n'existe pas, on l'ajoute
             if (!$contact) {
-                $contact = new Contact();
+                $contact         = new Contact();
                 $contactsToAdd[] = $contact->setName($data['name'])
                     ->setEmail($data['email']);
             } else {
@@ -91,8 +74,8 @@ class ImportController
 
         return $response->sendJson(
             [
-                'Added' => count($contactsToAdd),
-                'Updated' => count($contactsToUpdate)
+                'Added'   => count($contactsToAdd),
+                'Updated' => count($contactsToUpdate),
             ]
         );
     }

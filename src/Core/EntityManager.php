@@ -1,26 +1,9 @@
 <?php
 
-/**
- * Core file for defining the Entity Manager class.
- * php version 8.2
- *
- * @category Entities
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     damien-millet.dev
- */
-
 namespace Core;
 
 /**
  * Class EntityManager
- *
- * @category Entities
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     damien-millet.dev
  */
 abstract class EntityManager
 {
@@ -32,16 +15,17 @@ abstract class EntityManager
      *
      * @return EntityManager The entity object.
      */
-    public function __set($name, $value)
+    public function __set(string $name, mixed $value)
     {
-        $property = $this->_getProperty($name);
+        $property = $this->getProperty($name);
 
-        if ($property) {
+        if (isset($property)) {
             $property->setAccessible(true);
             if ($property->getName() === '_roles' && !is_array($value)) {
-                $value = json_decode($value, true);
+                if (is_string($value)) {
+                    $value = json_decode($value, true);
+                }
             }
-
             $property->setValue($this, $value);
         }
 
@@ -56,11 +40,11 @@ abstract class EntityManager
      *
      * @return mixed|null The property value or null if not found.
      */
-    public function __get($name)
+    public function __get(string $name)
     {
-        $property = $this->_getProperty($name);
+        $property = $this->getProperty($name);
 
-        if ($property) {
+        if (isset($property)) {
             $property->setAccessible(true);
             return $property->getValue($this);
         }
@@ -77,7 +61,7 @@ abstract class EntityManager
      * @return \ReflectionProperty|null The ReflectionProperty object
      * or null if not found.
      */
-    private function _getProperty(string $name): ?\ReflectionProperty
+    private function getProperty(string $name): ?\ReflectionProperty
     {
         $reflectionClass = new \ReflectionClass($this);
         $propertyNames   = [
@@ -100,7 +84,7 @@ abstract class EntityManager
     /**
      * Converts the object to an array.
      *
-     * @return array The object as an array.
+     * @return array<mixed> The object as an array.
      */
     public function toArray(): array
     {
@@ -119,11 +103,13 @@ abstract class EntityManager
     /**
      * Constructor method.
      *
-     * @param array|null $data The data to initialize the entity with.
+     * @param array<mixed>|null $data The data to initialize the entity with.
+     *
+     * @return void
      */
-    public function __construct($data = null) 
+    public function __construct(array $data = null)
     {
-        if ($data) {
+        if (is_array($data)) {
             $this->hydrate($data);
         }
     }
@@ -131,11 +117,11 @@ abstract class EntityManager
     /**
      * Hydrates the entity with data.
      *
-     * @param array $data The data to hydrate the entity with.
+     * @param array<mixed> $data The data to hydrate the entity with.
      *
      * @return static The entity object.
      */
-    public function hydrate($data): static 
+    public function hydrate(array $data): static
     {
         // Boucle sur les éléments du tableau $data
         foreach ($data as $key => $value) {

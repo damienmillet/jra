@@ -1,16 +1,5 @@
 <?php
 
-/**
- * Service file for defining the ModelService class.
- * php version 8.2
- *
- * @category Services
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     damien-millet.dev
- */
-
 namespace Services;
 
 use Entities\User;
@@ -19,12 +8,6 @@ use Managers\ModelManager;
 
 /**
  * Class ModelService
- *
- * @category Services
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     damien-millet.dev
  */
 class ModelService
 {
@@ -43,7 +26,7 @@ class ModelService
     /**
      * Get a user by ID.
      *
-     * @param int $id The ID of the user.
+     * @param integer $id The ID of the user.
      *
      * @return User|null The user object or null if not found.
      */
@@ -53,7 +36,7 @@ class ModelService
         return $userManager->findOneById($id);
     }
 
-    
+
     /**
      * Prepare a model object with the provided data.
      *

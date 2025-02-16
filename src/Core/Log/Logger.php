@@ -1,16 +1,5 @@
 <?php
 
-/**
- * Core file for defining the Logger class.
- * php version 8.2
- *
- * @category Core
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     damien-millet.dev
- */
-
 namespace Core\Log;
 
 use Core\Log\LoggerInterface;
@@ -19,27 +8,21 @@ use Core\Clock\Clock;
 
 /**
  * Class Logger
- *
- * @category Core
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     damien-millet.dev
  */
 class Logger implements LoggerInterface
 {
-    private string $_logFile;
+    private string $logFile;
 
 
     /**
      * Logs an emergency message.
      *
-     * @param string $message The message to log.
-     * @param array  $context The context array.
+     * @param string       $message The message to log.
+     * @param array<mixed> $context The context array.
      *
      * @return void
      */
-    public function emergency($message, array $context = []): void
+    public function emergency(string $message, array $context = []): void
     {
         $this->log($message, LogLevel::EMERGENCY);
     }
@@ -48,12 +31,12 @@ class Logger implements LoggerInterface
     /**
      * Logs an alert message.
      *
-     * @param string $message The message to log.
-     * @param array  $context The context array.
+     * @param string               $message The message to log.
+     * @param array<string,string> $context The context array.
      *
      * @return void
      */
-    public function alert($message, array $context = []): void
+    public function alert(string $message, array $context = []): void
     {
         $this->log($message, LogLevel::ALERT);
     }
@@ -62,12 +45,12 @@ class Logger implements LoggerInterface
     /**
      * Logs a critical message.
      *
-     * @param string $message The message to log.
-     * @param array  $context The context array.
+     * @param string               $message The message to log.
+     * @param array<string,string> $context The context array.
      *
      * @return void
      */
-    public function critical($message, array $context = []): void
+    public function critical(string $message, array $context = []): void
     {
         $this->log($message, LogLevel::CRITICAL);
     }
@@ -76,12 +59,12 @@ class Logger implements LoggerInterface
     /**
      * Logs an error message.
      *
-     * @param string $message The message to log.
-     * @param array  $context The context array.
+     * @param string               $message The message to log.
+     * @param array<string,string> $context The context array.
      *
      * @return void
      */
-    public function error($message, array $context = []): void
+    public function error(string $message, array $context = []): void
     {
         $this->log($message, LogLevel::ERROR);
     }
@@ -90,12 +73,12 @@ class Logger implements LoggerInterface
     /**
      * Logs a warning message.
      *
-     * @param string $message The message to log.
-     * @param array  $context The context array.
+     * @param string               $message The message to log.
+     * @param array<string,string> $context The context array.
      *
      * @return void
      */
-    public function warning($message, array $context = []): void
+    public function warning(string $message, array $context = []): void
     {
         $this->log($message, LogLevel::WARNING);
     }
@@ -104,12 +87,12 @@ class Logger implements LoggerInterface
     /**
      * Logs a notice message.
      *
-     * @param string $message The message to log.
-     * @param array  $context The context array.
+     * @param string               $message The message to log.
+     * @param array<string,string> $context The context array.
      *
      * @return void
      */
-    public function notice($message, array $context = []): void
+    public function notice(string $message, array $context = []): void
     {
         $this->log($message, LogLevel::NOTICE);
     }
@@ -118,12 +101,12 @@ class Logger implements LoggerInterface
     /**
      * Logs an info message.
      *
-     * @param string $message The message to log.
-     * @param array  $context The context array.
+     * @param string               $message The message to log.
+     * @param array<string,string> $context The context array.
      *
      * @return void
      */
-    public function info($message, array $context = []): void
+    public function info(string $message, array $context = []): void
     {
         $this->log($message, LogLevel::INFO);
     }
@@ -132,12 +115,12 @@ class Logger implements LoggerInterface
     /**
      * Logs a debug message.
      *
-     * @param string $message The message to log.
-     * @param array  $context The context array.
+     * @param string               $message The message to log.
+     * @param array<string,string> $context The context array.
      *
      * @return void
      */
-    public function debug($message, array $context = []): void
+    public function debug(string $message, array $context = []): void
     {
         $this->log($message, LogLevel::DEBUG);
     }
@@ -153,7 +136,7 @@ class Logger implements LoggerInterface
         $this->setLogFile($logFile);
 
         $dir = dirname($logFile);
-        if (!is_dir($dir)) {
+        if (! is_dir($dir)) {
             mkdir($dir, 0750, true);
         }
 
@@ -178,7 +161,7 @@ class Logger implements LoggerInterface
      */
     public function setLogFile(string $logFile): Logger
     {
-        $this->_logFile = $logFile;
+        $this->logFile = $logFile;
         return $this;
     }
 
@@ -190,25 +173,25 @@ class Logger implements LoggerInterface
      */
     public function getLogFile(): string
     {
-        return $this->_logFile;
+        return $this->logFile;
     }
 
 
     /**
      * Logs a message to the log file.
      *
-     * @param string $level   The log level.
-     * @param string $message The message to log.
-     * @param array  $context The context array.
+     * @param string               $level   The log level.
+     * @param string               $message The message to log.
+     * @param array<string,string> $context The context array.
      *
      * @return void
      */
-    public function log($level, $message, array $context = []): void
+    public function log(string $level, string $message, array $context = []): void
     {
         // generate the log data
         $clock = new Clock();
         $date  = $clock->now()->format('Y-m-d H:i:s');
-        $data  = "[$date][$level] $message\n";
+        $data  = '[' . $date . '][' . $level . '] ' . $message . "\n";
         // send to the log file
         $this->sendLogToFile($data);
         // send to the linux logger (syslog)
@@ -226,7 +209,7 @@ class Logger implements LoggerInterface
      */
     public function sendToSyslog(string $data): void
     {
-        $command = "logger -t Jra -p user.info \"$data\"";
+        $command = 'logger -t Jra -p user.info "' . $data . '"';
         exec($command);
     }
 

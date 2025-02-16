@@ -1,26 +1,9 @@
 <?php
 
-/**
- * Service file for defining the ConvertService class.
- * php version 8.2
- *
- * @category Services
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     damien-millet.dev
- */
-
 namespace Services;
 
 /**
  * Class ConvertService
- *
- * @category Services
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     damien-millet.dev
  */
 class ConvertService
 {
@@ -33,7 +16,7 @@ class ConvertService
      */
     public static function toObjectArray($array)
     {
-        return array_map(fn ($a) => $a->toArray(), $array);
+        return array_map(fn($a) => $a->toArray(), $array);
     }
 
 
@@ -90,8 +73,8 @@ class ConvertService
     public static function fromCsv(string $csv): array
     {
         $lines = explode("\n", $csv);
-        $data = [];
-        $keys = str_getcsv(array_shift($lines));
+        $data  = [];
+        $keys  = str_getcsv(array_shift($lines));
         foreach ($lines as $line) {
             $data[] = array_combine($keys, str_getcsv($line));
         }

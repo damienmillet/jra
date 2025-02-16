@@ -1,16 +1,5 @@
 <?php
 
-/**
- * Controller file for handling user-related actions.
- * php version 8.2
- *
- * @category Controllers
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     damien-millet.dev
- */
-
 namespace Controllers;
 
 use Core\Auth\Role;
@@ -23,12 +12,6 @@ use Core\Validator\Validator;
 /**
  * Class HistoricController
  * Controller for handling user-related actions.
- *
- * @category Controllers
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     damien-millet.dev
  */
 class HistoricController
 {

@@ -1,16 +1,5 @@
 <?php
 
-/**
- * Middleware file for handling user authentication.
- * php version 8.2
- *
- * @category Middlewares
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     damien-millet.dev
- */
-
 namespace Middlewares;
 
 use Core\Auth;
@@ -22,16 +11,8 @@ use Core\Http\Server\MiddlewareInterface;
 /**
  * Class AuthMiddleware
  * Middleware for handling user authentication.
- *
- * @category Middlewares
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     damien-millet.dev
  */
-
 class AuthMiddleware
-// implements MiddlewareInterface
 {
     /**
      * Handle the incoming request.
@@ -50,12 +31,18 @@ class AuthMiddleware
         $authorization = $request->getHeader('HTTP_AUTHORIZATION');
 
         // si l'entête Authorization est manquante
-        if (!$authorization) {
-            $response->sendJson(
+        if ($authorization === null) {
+            return $response->sendJson(
                 ['error' => 'Authorization header is missing'],
                 Response::HTTP_UNAUTHORIZED
             );
-            die();
+        }
+
+        if (!is_string($authorization)) {
+            return $response->sendJson(
+                ['error' => 'Invalid authorization header'],
+                Response::HTTP_UNAUTHORIZED
+            );
         }
 
         // on divise l'entête du token
@@ -63,11 +50,10 @@ class AuthMiddleware
 
         // mauvais type de token, on sort !
         if ($type !== 'Bearer') {
-            $response->sendJson(
+            return $response->sendJson(
                 ['error' => 'Invalid authorization type'],
                 Response::HTTP_UNAUTHORIZED
             );
-            die();
         }
 
         // on verifie sa validité
@@ -75,24 +61,31 @@ class AuthMiddleware
 
         // on sort si le token est invalide
         if (isset($secret['error'])) {
-            $response->sendJson(
+            return $response->sendJson(
                 ['error' => $secret['error']],
                 Response::HTTP_UNAUTHORIZED
             );
-            die();
+        }
+
+        if (!isset($secret['payload'])) {
+            return $response->sendJson(
+                ['error' => 'Invalid token'],
+                Response::HTTP_UNAUTHORIZED
+            );
         }
 
         // on verifie si le role de l'utilisateur est autorisé à accéder à la route
         $allowed = isset($secret['payload']) && $secret['payload']['roles']
-             && in_array($security->name, $secret['payload']['roles']);
+        && in_array($security->name, $secret['payload']['roles']);
+
+
 
         // si le type de token n'est pas Bearer ou si le token n'est pas valide
         if (!$allowed) {
-            $response->sendJson(
+            return $response->sendJson(
                 ['error' => 'Unauthorized'],
                 Response::HTTP_FORBIDDEN
             );
-            die();
         }
 
         // on store l'utilisateur dans la request

@@ -1,16 +1,5 @@
 <?php
 
-/**
- * Controller file for handling user-related actions.
- * php version 8.2
- *
- * @category Controllers
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     damien-millet.dev
- */
-
 namespace Controllers;
 
 use Core\ControllerInterface;
@@ -26,12 +15,6 @@ use Core\Route;
 /**
  * Class UserController
  * Controller for handling user-related actions.
- *
- * @category Controllers
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     damien-millet.dev
  */
 class UserController implements ControllerInterface
 {
@@ -104,12 +87,12 @@ class UserController implements ControllerInterface
 
         try {
             $userManager = new UserManager();
-            $user = $userManager->findOneById($id);
+            $user        = $userManager->findOneById($id);
 
             if ($user) {
                 $data = $request->getJson();
 
-                if (!$data || !UserService::isValide($data)) {
+                if (!$data || !UserService::isValid($data)) {
                     return $response->sendJson(
                         ['error' => 'Invalid data'],
                         Response::HTTP_BAD_REQUEST
@@ -118,7 +101,7 @@ class UserController implements ControllerInterface
 
                 $prepared = UserService::prepare($data, $user);
 
-                $updated  = $userManager->updateOne($prepared);
+                $updated = $userManager->updateOne($prepared);
 
                 if ($updated instanceof User) {
                     return $response->sendJson($updated->toArray());
@@ -165,11 +148,11 @@ class UserController implements ControllerInterface
 
         try {
             $userManager = new UserManager();
-            $user  = $userManager->findOneById($id);
+            $user        = $userManager->findOneById($id);
             if ($user) {
-                $data  = $request->getJson();
+                $data = $request->getJson();
 
-                if (!$data || !UserService::isValide($data)) {
+                if (!$data || !UserService::isValid($data)) {
                     return $response->sendJson(
                         ['error' => 'Invalid data'],
                         Response::HTTP_BAD_REQUEST
@@ -263,7 +246,7 @@ class UserController implements ControllerInterface
         try {
             $data = $request->getJson();
 
-            if (!$data || !UserService::isValidePost($data)) {
+            if (!$data || !UserService::isValidPost($data)) {
                 return $response->sendJson(
                     ['error' => 'Missing data'],
                     Response::HTTP_BAD_REQUEST

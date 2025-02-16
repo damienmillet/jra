@@ -1,45 +1,19 @@
 <?php
 
-/**
- * Core file for defining the Request class.
- * php version 8.2
- *
- * @category Core
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     damien-millet.dev
- */
-
 namespace Core;
 
 /**
  * Class Request
- *
- * @category Core
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     damien-millet.dev
  */
 class Request
 {
-    private string $_method;
+    private string $method;
 
-    private string $_uri;
+    private string $uri;
 
-    private array $_params = [];
+    private array $params = [];
 
-    private array $_authData = [];
-
-    // get $_SERVER
-    // get $_GET
-    // get $_POST
-    // get $_FILES
-    // get $_COOKIE
-    // get $_SESSION
-    // get $_ENV
-    // getallheaders()
+    private array $authData = [];
 
 
     /**
@@ -47,11 +21,10 @@ class Request
      */
     public function __construct()
     {
-        $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-        $this->setMethod($_SERVER['REQUEST_METHOD']);
+        $uri = parse_url($SERVER['REQUEST_URI'], PHP_URL_PATH);
+        $this->setMethod($SERVER['REQUEST_METHOD']);
         $this->setUri($uri);
     }
-
 
     /**
      * Setter for the HTTP method.
@@ -62,7 +35,7 @@ class Request
      */
     public function setMethod(string $method): Request
     {
-        $this->_method = $method;
+        $this->method = $method;
         return $this;
     }
 
@@ -76,7 +49,7 @@ class Request
      */
     public function setUri(string $uri): Request
     {
-        $this->_uri = $uri;
+        $this->uri = $uri;
         return $this;
     }
 
@@ -91,7 +64,7 @@ class Request
      */
     public function setParam(string $key, $value): Request
     {
-        $this->_params[$key] = $value;
+        $this->params[$key] = $value;
         return $this;
     }
 
@@ -105,7 +78,7 @@ class Request
      */
     public function getParam(string $key)
     {
-        return $this->_params[$key] ?? null;
+        return $this->params[$key] ?? null;
     }
 
 
@@ -116,7 +89,7 @@ class Request
      */
     public function getMethod(): string
     {
-        return $this->_method;
+        return $this->method;
     }
 
 
@@ -127,7 +100,7 @@ class Request
      */
     public function getUri(): string
     {
-        return $this->_uri;
+        return $this->uri;
     }
 
 
@@ -138,15 +111,13 @@ class Request
      *                       into associative arrays.
      *
      * @return mixed
-     *
-     * @throws \RuntimeException
      */
     public function getJson(bool $assoc = true): mixed
     {
         $input = file_get_contents('php://input');
 
         if (isset($input)) {
-            $data  = json_decode($input, $assoc);
+            $data = json_decode($input, $assoc);
         }
 
         // Vérification des erreurs JSON
@@ -166,7 +137,7 @@ class Request
     public function getQuery(): array
     {
         $headers = $this->getHeaders();
-        return $this->_queryToArray($headers['QUERY_STRING']);
+        return $this->queryToArray($headers['QUERY_STRING']);
     }
 
 
@@ -180,7 +151,7 @@ class Request
         $headers = [];
 
         // getallheaders();
-        foreach ($_SERVER as $key => $value) {
+        foreach ($SERVER as $key => $value) {
             $headers[$key] = $value;
         }
 
@@ -217,11 +188,11 @@ class Request
      */
     public function get(string $key, $default = null, ?int $filter = 515): mixed
     {
-        if (!isset($_GET[$key])) {
+        if (!isset($GET[$key])) {
             return $default;
         }
 
-        $value = $_GET[$key];
+        $value = $GET[$key];
 
         if ($filter !== null) {
             $value = filter_var($value, $filter);
@@ -240,7 +211,7 @@ class Request
      */
     public function setAuthData(array $authData): static
     {
-        $this->_authData = $authData;
+        $this->authData = $authData;
         return $this;
     }
 
@@ -252,7 +223,7 @@ class Request
      */
     public function getAuthData(): array
     {
-        return $this->_authData;
+        return $this->authData;
     }
 
 
@@ -267,11 +238,11 @@ class Request
      */
     public function post(string $key, $default = null, ?int $filter = 515): mixed
     {
-        if (!isset($_POST[$key])) {
+        if (!isset($POST[$key])) {
             return $default;
         }
 
-        $value = $_POST[$key];
+        $value = $POST[$key];
 
         // Appliquer un filtre si spécifié
         if ($filter !== null) {
@@ -306,7 +277,7 @@ class Request
      */
     public function getFiles(): array
     {
-        return $_FILES;
+        return $FILES;
     }
 
     /**
@@ -318,7 +289,7 @@ class Request
      */
     public function getCookie(string $key): mixed
     {
-        return $_COOKIE[$key] ?? null;
+        return $COOKIE[$key] ?? null;
     }
 
     /**

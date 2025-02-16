@@ -1,16 +1,5 @@
 <?php
 
-/**
- * Controller file for handling user-related actions.
- * php version 8.2
- *
- * @category Controllers
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     https://damien-millet.dev
- */
-
 namespace Controllers;
 
 use Core\Request;
@@ -25,20 +14,14 @@ use Services\FileService;
 /**
  * Class FileController
  * Controller for handling user-related actions.
- *
- * @category Controllers
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     https://damien-millet.dev
  */
 class FileController
 {
     /**
      * Handles the POST request.
      *
-     * @param mixed $request  The request object.
-     * @param mixed $response The response object.
+     * @param Request  $request  The request object.
+     * @param Response $response The response object.
      *
      * @return Response
      */
@@ -57,7 +40,6 @@ class FileController
         $files = $request->getFiles();
 
         foreach ($files as $file) {
-
             $prepared = FileService::prepare($file);
 
             $fileManager = new FileManager();
@@ -74,15 +56,14 @@ class FileController
             ['success' => 'Files uploaded successfully'],
             Response::HTTP_OK
         );
-
     }
 
 
     /**
      * Handles the GET request.
      *
-     * @param mixed $request  The request object.
-     * @param mixed $response The response object.
+     * @param Request  $request  The request object.
+     * @param Response $response The response object.
      *
      * @return Response
      */
@@ -100,8 +81,8 @@ class FileController
     /**
      * Handles the DELETE request.
      *
-     * @param mixed $request  The request object.
-     * @param mixed $response The response object.
+     * @param Request  $request  The request object.
+     * @param Response $response The response object.
      *
      * @return Response
      */

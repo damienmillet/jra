@@ -1,16 +1,5 @@
 <?php
 
-/**
- * Controller file for handling user-related actions.
- * php version 8.2
- *
- * @category Controllers
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     https://damien-millet.dev
- */
-
 namespace Controllers;
 
 use Core\Auth\Role;
@@ -24,12 +13,6 @@ use Services\ExportService;
 /**
  * Class ExportController
  * Controller for handling user-related actions.
- *
- * @category Controllers
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     https://damien-millet.dev
  */
 class ExportController
 {
@@ -64,7 +47,7 @@ class ExportController
         $csvContent = ConvertService::toCsv($data);
 
         $clock = new Clock();
-        $date = $clock->now()->format('Y-m-d_H-i-s');
+        $date  = $clock->now()->format('Y-m-d_H-i-s');
 
         $response->setHeader('Content-Type', 'text/csv');
         $response->setHeader(

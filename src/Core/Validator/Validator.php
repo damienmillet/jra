@@ -47,10 +47,10 @@ class Validator
             $value,
             FILTER_VALIDATE_INT,
             [
-             'options' => [
-                           'min_range' => $min,
-                           'max_range' => $max,
-                          ],
+                'options' => [
+                    'min_range' => $min,
+                    'max_range' => $max,
+                ],
             ]
         ) !== false;
     }
@@ -146,7 +146,7 @@ class Validator
     /**
      * Checks if the given value is empty.
      *
-     * @param string $value The value to check.
+     * @param  string $value The value to check.
      * @return boolean True if the value is empty, false otherwise.
      */
     public static function isEmptyString(string $value): bool
@@ -157,7 +157,7 @@ class Validator
     /**
      * Checks if the given array is not empty.
      *
-     * @param array<mixed> $value The array to check.
+     * @param  array<mixed> $value The array to check.
      * @return boolean Returns true if the array is not empty, false otherwise.
      */
     public static function isEmptyArray(array $value): bool
@@ -168,7 +168,7 @@ class Validator
     /**
      * Checks if the given value is an array.
      *
-     * @param mixed $value The value to check.
+     * @param  mixed $value The value to check.
      * @return boolean True if the value is an array, false otherwise.
      */
     public static function isArray(mixed $value): bool

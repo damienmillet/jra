@@ -1,16 +1,5 @@
 <?php
 
-/**
- * Entity file for defining the Vehicle Entity class.
- * php version 8.2
- *
- * @category Entities
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     damien-millet.dev
- */
-
 namespace Entities;
 
 use Core\Auth\Role;
@@ -18,44 +7,38 @@ use Core\EntityManager;
 
 /**
  * Class VehicleEntity
- *
- * @category Entities
- * @package  Jra
- * @author   Damien Millet <contact@damien-millet.dev>
- * @license  MIT License
- * @link     damien-millet.dev
  */
 class Vehicle extends EntityManager
 {
-    private int $_id;
+    private int $id;
 
-    private string $_name;
+    private string $name;
 
-    private int $_modelId;
+    private int $modelId;
 
-    private float $_buyPrice;
+    private float $buyPrice;
 
-    private string $_buyDate;
+    private string $buyDate;
 
-    private string $_type;
+    private string $type;
 
-    private string $_fuel;
+    private string $fuel;
 
-    private int $_km;
+    private int $km;
 
-    private int $_cv;
+    private int $cv;
 
-    private string $_color;
+    private string $color;
 
-    private string $_transmission;
+    private string $transmission;
 
-    private int $_doors;
+    private int $doors;
 
-    private int $_seats;
+    private int $seats;
 
-    private string $_createdAt;
+    private string $createdAt;
 
-    private string $_modifiedAt;
+    private string $modifiedAt;
 
 
     /**
@@ -65,7 +48,7 @@ class Vehicle extends EntityManager
      */
     public function getId(): int
     {
-        return $this->_id;
+        return $this->id;
     }
 
 
@@ -78,7 +61,7 @@ class Vehicle extends EntityManager
      */
     public function setId(int $id): self
     {
-        $this->_id = $id;
+        $this->id = $id;
         return $this;
     }
 
@@ -90,7 +73,7 @@ class Vehicle extends EntityManager
      */
     public function getName(): string
     {
-        return $this->_name;
+        return $this->name;
     }
 
 
@@ -103,7 +86,7 @@ class Vehicle extends EntityManager
      */
     public function setName(string $name): self
     {
-        $this->_name = $name;
+        $this->name = $name;
         return $this;
     }
 
@@ -115,7 +98,7 @@ class Vehicle extends EntityManager
      */
     public function getModelId(): int
     {
-        return $this->_modelId;
+        return $this->modelId;
     }
 
 
@@ -128,7 +111,7 @@ class Vehicle extends EntityManager
      */
     public function setModelId(int $modelId): self
     {
-        $this->_modelId = $modelId;
+        $this->modelId = $modelId;
         return $this;
     }
 
@@ -140,7 +123,7 @@ class Vehicle extends EntityManager
      */
     public function getBuyPrice(): float
     {
-        return $this->_buyPrice;
+        return $this->buyPrice;
     }
 
 
@@ -153,7 +136,7 @@ class Vehicle extends EntityManager
      */
     public function setBuyPrice(float $buyPrice): self
     {
-        $this->_buyPrice = $buyPrice;
+        $this->buyPrice = $buyPrice;
         return $this;
     }
 
@@ -165,7 +148,7 @@ class Vehicle extends EntityManager
      */
     public function getBuyDate(): string
     {
-        return $this->_buyDate;
+        return $this->buyDate;
     }
 
 
@@ -178,7 +161,7 @@ class Vehicle extends EntityManager
      */
     public function setBuyDate(string $buyDate): self
     {
-        $this->_buyDate = $buyDate;
+        $this->buyDate = $buyDate;
         return $this;
     }
 
@@ -190,7 +173,7 @@ class Vehicle extends EntityManager
      */
     public function getType(): string
     {
-        return $this->_type;
+        return $this->type;
     }
 
 
@@ -203,7 +186,7 @@ class Vehicle extends EntityManager
      */
     public function setType(string $type): self
     {
-        $this->_type = $type;
+        $this->type = $type;
         return $this;
     }
 
@@ -215,7 +198,7 @@ class Vehicle extends EntityManager
      */
     public function getFuel(): string
     {
-        return $this->_fuel;
+        return $this->fuel;
     }
 
 
@@ -228,7 +211,7 @@ class Vehicle extends EntityManager
      */
     public function setFuel(string $fuel): self
     {
-        $this->_fuel = $fuel;
+        $this->fuel = $fuel;
         return $this;
     }
 
@@ -240,7 +223,7 @@ class Vehicle extends EntityManager
      */
     public function getKm(): int
     {
-        return $this->_km;
+        return $this->km;
     }
 
 
@@ -253,7 +236,7 @@ class Vehicle extends EntityManager
      */
     public function setKm(int $km): self
     {
-        $this->_km = $km;
+        $this->km = $km;
         return $this;
     }
 
@@ -265,7 +248,7 @@ class Vehicle extends EntityManager
      */
     public function getCv(): int
     {
-        return $this->_cv;
+        return $this->cv;
     }
 
 
@@ -278,7 +261,7 @@ class Vehicle extends EntityManager
      */
     public function setCv(int $cv): self
     {
-        $this->_cv = $cv;
+        $this->cv = $cv;
         return $this;
     }
 
@@ -290,7 +273,7 @@ class Vehicle extends EntityManager
      */
     public function getColor(): string
     {
-        return $this->_color;
+        return $this->color;
     }
 
 
@@ -303,7 +286,7 @@ class Vehicle extends EntityManager
      */
     public function setColor(string $color): self
     {
-        $this->_color = $color;
+        $this->color = $color;
         return $this;
     }
 
@@ -315,7 +298,7 @@ class Vehicle extends EntityManager
      */
     public function getTransmission(): string
     {
-        return $this->_transmission;
+        return $this->transmission;
     }
 
 
@@ -328,7 +311,7 @@ class Vehicle extends EntityManager
      */
     public function setTransmission(string $transmission): self
     {
-        $this->_transmission = $transmission;
+        $this->transmission = $transmission;
         return $this;
     }
 
@@ -340,7 +323,7 @@ class Vehicle extends EntityManager
      */
     public function getDoors(): int
     {
-        return $this->_doors;
+        return $this->doors;
     }
 
 
@@ -353,7 +336,7 @@ class Vehicle extends EntityManager
      */
     public function setDoors(int $doors): self
     {
-        $this->_doors = $doors;
+        $this->doors = $doors;
         return $this;
     }
 
@@ -365,7 +348,7 @@ class Vehicle extends EntityManager
      */
     public function getSeats(): int
     {
-        return $this->_seats;
+        return $this->seats;
     }
 
 
@@ -378,7 +361,7 @@ class Vehicle extends EntityManager
      */
     public function setSeats(int $seats): self
     {
-        $this->_seats = $seats;
+        $this->seats = $seats;
         return $this;
     }
 
@@ -390,7 +373,7 @@ class Vehicle extends EntityManager
      */
     public function getCreatedAt(): string
     {
-        return $this->_createdAt;
+        return $this->createdAt;
     }
 
 
@@ -403,7 +386,7 @@ class Vehicle extends EntityManager
      */
     public function setCreatedAt(string $createdAt): self
     {
-        $this->_createdAt = $createdAt;
+        $this->createdAt = $createdAt;
         return $this;
     }
 
@@ -415,7 +398,7 @@ class Vehicle extends EntityManager
      */
     public function getModifiedAt(): string
     {
-        return $this->_modifiedAt;
+        return $this->modifiedAt;
     }
 
 
@@ -428,7 +411,7 @@ class Vehicle extends EntityManager
      */
     public function setModifiedAt(string $modifiedAt): self
     {
-        $this->_modifiedAt = $modifiedAt;
+        $this->modifiedAt = $modifiedAt;
         return $this;
     }
 
