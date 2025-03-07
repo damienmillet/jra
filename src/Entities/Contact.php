@@ -148,7 +148,7 @@ class Contact extends EntityManager
     /**
      * Converts the contact object to an array.
      *
-     * @return array The contact object as an array.
+     * @return array<mixed> The contact object as an array.
      */
     public function toArray(): array
     {
